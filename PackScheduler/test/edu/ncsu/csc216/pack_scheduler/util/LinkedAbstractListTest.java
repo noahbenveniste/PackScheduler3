@@ -202,4 +202,12 @@ public class LinkedAbstractListTest {
             assertEquals(l.get(2), "two");
         }
     }
+    
+    /**
+     * Tests the setCapacity method for the linked list
+     */
+    @Test
+    public void testGetCapacity() {
+        
+    }
 }

@@ -110,4 +110,55 @@ public class CourseRollTest {
         assertEquals(10, c.getOpenSeats());
     }
 
-}
+    /** 
+     * Test the setEnrollmentCap method for CourseRoll 
+     */
+    @Test
+    public void testSetEnrollmentCap() {
+        CourseRoll c = new CourseRoll(10);
+        
+        //Students that can enroll
+        Student s1 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
+        Student s2 = new Student("b", "ba", "bad", "bad@ncsu.edu", "hashedpassword");
+        Student s3 = new Student("c", "ca", "cad", "cad@ncsu.edu", "hashedpassword");
+        Student s4 = new Student("d", "da", "dad", "dad@ncsu.edu", "hashedpassword");
+        Student s5 = new Student("e", "ea", "ead", "ead@ncsu.edu", "hashedpassword");
+        Student s6 = new Student("f", "fa", "fad", "fad@ncsu.edu", "hashedpassword");
+        Student s7 = new Student("g", "ga", "gad", "gad@ncsu.edu", "hashedpassword");
+        Student s8 = new Student("h", "ha", "had", "had@ncsu.edu", "hashedpassword");
+        Student s9 = new Student("i", "ia", "iad", "iad@ncsu.edu", "hashedpassword");
+        Student s10 = new Student("j", "ja", "jad", "jad@ncsu.edu", "hashedpassword");
+        Student s11 = new Student("k", "ka", "kad", "kad@ncsu.edu", "hashedpassword");
+        
+        //Tests valid enrollmentCap
+        
+        try {
+            c.setEnrollmentCap(10);
+            assertEquals(10, c.getEnrollmentCap());
+        }catch (IllegalArgumentException e) {
+                fail();
+            
+        }
+        
+        c.enroll(s1);
+        c.enroll(s2);
+        c.enroll(s3);
+        c.enroll(s4);
+        c.enroll(s5);
+        c.enroll(s6);
+        c.enroll(s7);
+        c.enroll(s8);
+        c.enroll(s9);
+        c.enroll(s10);
+        
+        try {
+            c.enroll(s11);
+            fail();
+        }catch(IllegalArgumentException e) {
+                assertEquals("Enrollment cap is too large/small.", e.getMessage());
+            }
+        }
+    
+        
+    }
+
