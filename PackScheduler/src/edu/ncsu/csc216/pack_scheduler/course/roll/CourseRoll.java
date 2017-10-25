@@ -53,7 +53,7 @@ public class CourseRoll {
         if (enrollmentCap < MIN_ENROLLMENT || enrollmentCap > MAX_ENROLLMENT || roll.size() > enrollmentCap) {
             throw new IllegalArgumentException("Enrollment cap is too large/small.");
         }
-        roll.setCapacity(enrollmentcap);
+        roll.setCapacity(enrollmentCap);
         this.enrollmentCap = enrollmentCap; 
     }
     

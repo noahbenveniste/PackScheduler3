@@ -35,12 +35,16 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
     }
     
     /**
-     * Sets the new capacity of the list
+     * Sets the capacity for the list
      * 
-     * @param capacity the new capacity of the list
+     * @throws IllegalArguementException if the capacity is less than 0 or less than the size
+     * @param capacity the capacity of the list
+     * 
      */
-    public void setCapacity (int capacity) {
-        this.capacity = capacity;    
+    public void setCapacity(int capacity) {
+    	if (capacity < 0 || capacity < size)
+    		throw new IllegalArgumentException("The capacity must be greater than 0 and greater than the size");
+    	this.capacity = capacity;
     }
     
     /**
@@ -198,17 +202,6 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
         return size;
     }
 
-    /**
-     * Sets the capacity for the list
-     * 
-     * @throws IllegalArguementException if the capacity is less than 0 or less than the size
-     * @return the list capacity
-     */
-    public void setCapacity(int capacity) {
-    	if (capacity < 0 || capacity < size)
-    		throw new IllegalArguementException("The capacity must be greater than 0 and greater than the size");
-    	this.capacity = capacity;
-    }
     
     /**
      * Inner class of LinkedAbstractList that represent each element in the list.
