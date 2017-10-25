@@ -115,7 +115,7 @@ public class CourseRollTest {
      */
     @Test
     public void testSetEnrollmentCap() {
-        CourseRoll c = new CourseRoll(10);
+        CourseRoll c = new CourseRoll(11);
         
         //Students that can enroll
         Student s1 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
@@ -130,16 +130,23 @@ public class CourseRollTest {
         Student s10 = new Student("j", "ja", "jad", "jad@ncsu.edu", "hashedpassword");
         Student s11 = new Student("k", "ka", "kad", "kad@ncsu.edu", "hashedpassword");
         
-        //Tests valid enrollmentCap
-        
+        //Invalid minimum enrollment
         try {
-            c.setEnrollmentCap(10);
-            assertEquals(10, c.getEnrollmentCap());
+            c.setEnrollmentCap(9);
+            fail("Can't set enrolllment cap below minimum");
         }catch (IllegalArgumentException e) {
-                fail();
-            
+            assertEquals(11, c.getEnrollmentCap());
         }
         
+        //Invalid max enrollment
+        try {
+            c.setEnrollmentCap(950);
+            fail("Can't set enrolllment cap above maximum");
+        }catch (IllegalArgumentException e) {
+            assertEquals(11, c.getEnrollmentCap());
+        }
+        
+        //Test enrollment smaller than size
         c.enroll(s1);
         c.enroll(s2);
         c.enroll(s3);
@@ -150,15 +157,21 @@ public class CourseRollTest {
         c.enroll(s8);
         c.enroll(s9);
         c.enroll(s10);
-        
+        c.enroll(s11);
         try {
-            c.enroll(s11);
-            fail();
-        }catch(IllegalArgumentException e) {
-                assertEquals("Enrollment cap is too large/small.", e.getMessage());
-            }
+            c.setEnrollmentCap(10);
+            fail("Can't set enrolllment cap smaller than size");
+        }catch (IllegalArgumentException e) {
+            assertEquals(11, c.getEnrollmentCap());
         }
-    
         
+        
+        //Test valid enrollment size
+        try {
+            c.setEnrollmentCap(100);
+            assertEquals(100, c.getEnrollmentCap());
+        }catch (IllegalArgumentException e) {
+            fail();   
+        }
     }
-
+}   

@@ -13,11 +13,11 @@ import java.util.AbstractList;
 public class LinkedAbstractList<E> extends AbstractList<E> {
 
     /** The first node in the list */
-    ListNode front;
+    private ListNode front;
     /** The size of the list */
-    int size;
+    private int size;
     /** The max capacity of the list */
-    int capacity;
+    private int capacity;
     
     /**
      * Creates a new LinkedAbstractList with a capacity

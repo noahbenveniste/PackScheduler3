@@ -207,7 +207,30 @@ public class LinkedAbstractListTest {
      * Tests the setCapacity method for the linked list
      */
     @Test
-    public void testGetCapacity() {
+    public void testSetCapacity() {
+        LinkedAbstractList<String> l = new LinkedAbstractList<String>(10);
+        
+        //Setting negative capacity
+        try {
+            l.setCapacity(-1);
+            fail("Can't set capacity smaller than zero");
+        }catch (IllegalArgumentException e) { 
+            assertEquals(l.size(),0);
+        }
+        
+        l.add(0, "zero");
+        l.add(1, "one");
+        l.add(2, "two");
+
+        try {
+            l.setCapacity(2);
+            fail("Can't set capacity smaller than size");
+        } catch (IllegalArgumentException e) {
+            assertEquals(l.size(), 3);
+        }
+        
+        
+        
         
     }
 }
