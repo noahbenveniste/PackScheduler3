@@ -47,6 +47,7 @@ public class ArrayStackTest {
         
         a.setCapacity(3);
         
+        // Tests add when capacity has been reached
         try {
             a.push(4);
             fail("Capacity has been reached.");

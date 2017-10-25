@@ -3,6 +3,8 @@
  */
 package edu.ncsu.csc216.pack_scheduler.util;
 
+import java.util.EmptyStackException;
+
 /**
  * @author Brian Wu, Noah Beneviste, Ben Gale
  *
@@ -15,32 +17,46 @@ public class LinkedStack<E> implements Stack<E> {
     /** Size of list */
     private int size;
     
+    @SuppressWarnings("unchecked")
     public LinkedStack (int capacity) {
-        
+        LinkedAbstractList<Object> o = new LinkedAbstractList<Object>(capacity);
+        list = (LinkedAbstractList<E>) o;
+        setCapacity(capacity);
+        this.size = 0;
     }
 
     @Override
     public void push(E element) {
-        // TODO Auto-generated method stub
-        
+        if (this.size == this.capacity) {
+            throw new IllegalArgumentException("Capacity has been reached.");
+        }
+        // Adds element to the end of ArrayList (top of our stack)
+        list.add(0, element);
+        this.size++;
     }
 
     @Override
     public E pop() {
-        // TODO Auto-generated method stub
-        return null;
+        if (isEmpty()) {
+            throw new EmptyStackException();
+        }
+        E element = list.remove(0);
+        this.size--;
+        return element;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+        if (this.size == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.size;
     }
 
     @Override
@@ -50,7 +66,7 @@ public class LinkedStack<E> implements Stack<E> {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(e.getMessage());
         }
-        
+        this.capacity = capacity;
     }
     
 
