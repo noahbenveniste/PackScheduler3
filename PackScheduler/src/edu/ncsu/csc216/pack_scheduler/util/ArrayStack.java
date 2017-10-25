@@ -32,7 +32,7 @@ public class ArrayStack<E> implements Stack<E> {
             throw new IllegalArgumentException("Capacity has been reached.");
         }
         // Adds element to the end of ArrayList (top of our stack)
-        list.add(element);
+        list.add(size, element);
         this.size++;
     }
 

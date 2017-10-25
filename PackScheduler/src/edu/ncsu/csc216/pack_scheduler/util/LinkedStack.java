@@ -8,7 +8,13 @@ package edu.ncsu.csc216.pack_scheduler.util;
  *
  */
 public class LinkedStack<E> implements Stack<E> {
-
+    /** List of objects */
+    private LinkedAbstractList<E> list;
+    /** Capacity of list */
+    private int capacity;
+    /** Size of list */
+    private int size;
+    
     public LinkedStack (int capacity) {
         
     }
@@ -39,7 +45,11 @@ public class LinkedStack<E> implements Stack<E> {
 
     @Override
     public void setCapacity(int capacity) {
-        // TODO Auto-generated method stub
+        try {
+            list.setCapacity(capacity); 
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
+        }
         
     }
     
