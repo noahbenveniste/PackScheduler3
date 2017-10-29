@@ -66,6 +66,48 @@ public class LinkedAbstractListTest {
             assertEquals(l.get(5), "five");
         }
         
+        try {
+            l.add(0, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
+        try {
+            l.add(1, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
+        try {
+            l.add(2, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
+        try {
+            l.add(3, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
+        try {
+            l.add(4, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
+        try {
+            l.add(5, "one");
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals(6, l.size());
+        }
+        
         // Test for illegal index
         try {
             l.add(7, "asdfasd");

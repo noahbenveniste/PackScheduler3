@@ -56,46 +56,46 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
      *              if the list has reached capacity or there is a duplicate element
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public void add(int index, E element) {
-        if (size == capacity) {
-            throw new IllegalArgumentException("List has reached capacity.");
+    public void add(int idx, E element) {
+      //Check if the list is full
+        if (this.size() == this.capacity) {
+            throw new IllegalArgumentException("List is full.");
         }
-        
-        if (index < 0 || index > size()) {
-            throw new IndexOutOfBoundsException("Invalid index.");
-        }
-        
+        //Check for null input data
         if (element == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("Cannot add null elements.");
         }
-        
-        if (index == 0) {
-            ListNode newNode = new ListNode(element, null);
-            if (size == 0) {
-                front = newNode;
-            } else {
-                newNode.next = front;
-                front = newNode;
+        //Check for duplicates
+        ListNode current = this.front;
+        for (int i = 0; i < this.size(); i++) {
+            if (current.data.equals(element)) {
+                throw new IllegalArgumentException("Cannot add duplicate elements.");
             }
-        } else { 
-            ListNode temp = front;
-            while (temp.next != null) {
-                if (temp.data.equals(element)) {
-                    throw new IllegalArgumentException("Duplicate element.");
-                }
-                temp = temp.next;
-            }
-            
-            temp = front;
-            for (int i = 0; i < index - 1; i++) {
-                temp = temp.next;
-            }
-            ListNode newNode = new ListNode(element);
-            ListNode nextNode = temp.next;
-            temp.next = newNode;
-            newNode.next = nextNode;
+            current = current.next;
         }
-        size++;
+        //Check for out of bounds index
+        if (idx < 0 || idx > this.size()) {
+            throw new IndexOutOfBoundsException("Index is outside the acceptable range.");
+        }
+        //Adding to the front of the list
+        if (idx == 0) {
+            ListNode newFront = new ListNode(element, this.front); //Make the new node point to the old front
+            this.front = newFront; //Make the front field point to the new front;
+            this.size++;
+            return;
+        }
+        //Adding to the middle or end of the list
+        current = this.front;
+        for (int i = 0; i < idx; i++) { //Traverse the list to get the reference to the old element at the index to add to
+            current = current.next;
+        }
+        ListNode newNode = new ListNode(element, current); //Create a new node that points to the old element at the index to add to
+        current = this.front;
+        for (int i = 0; i < idx - 1; i++) { //Traverse the list to get to the index just before the index to add to
+            current = current.next;
+        }
+        current.next = newNode; //Make the element at the index just before the index being added to point to the newly created node
+        this.size++;
     }
     
     /**
