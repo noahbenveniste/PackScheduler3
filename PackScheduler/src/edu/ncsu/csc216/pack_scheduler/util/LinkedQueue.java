@@ -40,6 +40,7 @@ public class LinkedQueue<E> implements Queue<E> {
         //Add an element to the back of the queue i.e. the front of the LinkedAbstractList
         if (size < capacity) {
             list.add(0, element);
+            size++;
         } else {
             throw new IllegalArgumentException("Queue is full");
         }
@@ -82,7 +83,10 @@ public class LinkedQueue<E> implements Queue<E> {
     }
 
     /**
-     * 
+     * Used to change the capacity of the queue
+     * @param capacity the new capacity to set
+     * @throws IllegalArgumentException if the new capacity is negative or less than
+     * the current size of the queue
      */
     @Override
     public void setCapacity(int capacity) {

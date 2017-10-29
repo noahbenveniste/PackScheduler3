@@ -40,6 +40,7 @@ public class ArrayQueue<E> implements Queue<E> {
         //Add an element to the back of the queue i.e. the front of the ArrayList
         if (size < capacity) {
             list.add(0, element);
+            size++;
         } else {
             throw new IllegalArgumentException("Queue is full");
         }
@@ -83,6 +84,7 @@ public class ArrayQueue<E> implements Queue<E> {
 
     /**
      * Sets the ArrayQueue's capacity
+     * @param capacity the new capacity to set
      * @throws IllegalArgumentException if the capacity is negative or less than the current queue's size
      */
     @Override
