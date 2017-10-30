@@ -2,6 +2,7 @@ package edu.ncsu.csc216.pack_scheduler.course.roll;
 
 import java.util.NoSuchElementException;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedQueue;
@@ -28,7 +29,12 @@ public class CourseRoll {
     /** Constructs CourseRoll
      * @param enrollmentCap enrollment cap for the class
      */
-    public CourseRoll(int enrollmentCap) {
+    public CourseRoll(Course c, int enrollmentCap) {
+        
+        if (c == null) {
+            throw new IllegalArgumentException("Course parameter can't be null.");
+        }
+        
         // Create the list with a capacity of enrollmentCap
         roll = new LinkedAbstractList<Student>(enrollmentCap);
         

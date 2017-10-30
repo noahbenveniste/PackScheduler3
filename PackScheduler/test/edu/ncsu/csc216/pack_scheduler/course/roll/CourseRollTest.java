@@ -2,8 +2,10 @@ package edu.ncsu.csc216.pack_scheduler.course.roll;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 
 /**
@@ -13,7 +15,17 @@ import edu.ncsu.csc216.pack_scheduler.user.Student;
  */
 
 public class CourseRollTest {
+    /** Course to be used in all tests */
+    private Course c;
+    /** Course roll to be used in all tests */
+    private CourseRoll roll;
 
+    @Before
+    public void setUp() {
+        c = new Course("CSC216", "Programming Concepts - Java", "001", 4, "sesmith5", 10, "A");
+        roll = c.getCourseRoll();
+    }
+    
     /** Test the constructor */
     @Test
     public void testCourseRoll() {
@@ -22,7 +34,7 @@ public class CourseRollTest {
         
         // Create invalid courseRolls
         try {
-            course = new CourseRoll(9);
+            course = new CourseRoll(c, 9);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -30,7 +42,7 @@ public class CourseRollTest {
         }
         
         try {
-            course = new CourseRoll(251);
+            course = new CourseRoll(c, 251);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -38,7 +50,7 @@ public class CourseRollTest {
         }
         
         // Create a valid courseRoll
-        course = new CourseRoll(20);
+        course = new CourseRoll(c, 20);
         assertEquals(20, course.getEnrollmentCap());
         assertEquals(20, course.getOpenSeats());
 //        fail("Not yet implemented");
@@ -48,19 +60,19 @@ public class CourseRollTest {
     @Test
     public void testEnroll() {
         
-        CourseRoll c = new CourseRoll(10);
+        CourseRoll roll = new CourseRoll(c, 10);
         
         Student s = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         Student s2 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         Student s3 = new Student("f", "l", "i", "eAnother@ncsu.edu", "hashedp");
         
         // Add a student
-        c.enroll(s);
-        assertEquals(9, c.getOpenSeats());
+        roll.enroll(s);
+        assertEquals(9, roll.getOpenSeats());
         
         // Add duplicate student
         try {
-            c.enroll(s2);
+            roll.enroll(s2);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -68,12 +80,12 @@ public class CourseRollTest {
         }
         
         // Add second student
-        c.enroll(s3);
-        assertEquals(8, c.getOpenSeats());
+        roll.enroll(s3);
+        assertEquals(8, roll.getOpenSeats());
         
         // Add null Student
         try {
-            c.enroll(null);
+            roll.enroll(null);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -87,13 +99,13 @@ public class CourseRollTest {
     @Test
     public void testDrop() {
         
-        CourseRoll c = new CourseRoll(10);
+        CourseRoll roll = new CourseRoll(c, 10);
         
         Student s = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         
         // Add null student
         try {
-            c.enroll(null);
+            roll.enroll(null);
             fail();
         }
         catch (IllegalArgumentException e) {
@@ -101,13 +113,13 @@ public class CourseRollTest {
         }
         
         // Add student
-        c.enroll(s);
-        assertEquals(9, c.getOpenSeats());
+        roll.enroll(s);
+        assertEquals(9, roll.getOpenSeats());
         
 
         // Remove existing student
-        c.drop(s);
-        assertEquals(10, c.getOpenSeats());
+        roll.drop(s);
+        assertEquals(10, roll.getOpenSeats());
     }
 
     /** 
@@ -115,7 +127,7 @@ public class CourseRollTest {
      */
     @Test
     public void testSetEnrollmentCap() {
-        CourseRoll c = new CourseRoll(11);
+        CourseRoll roll = new CourseRoll(c, 11);
         
         //Students that can enroll
         Student s1 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
@@ -132,44 +144,44 @@ public class CourseRollTest {
         
         //Invalid minimum enrollment
         try {
-            c.setEnrollmentCap(9);
+            roll.setEnrollmentCap(9);
             fail("Can't set enrolllment cap below minimum");
         }catch (IllegalArgumentException e) {
-            assertEquals(11, c.getEnrollmentCap());
+            assertEquals(11, roll.getEnrollmentCap());
         }
         
         //Invalid max enrollment
         try {
-            c.setEnrollmentCap(950);
+            roll.setEnrollmentCap(950);
             fail("Can't set enrolllment cap above maximum");
         }catch (IllegalArgumentException e) {
-            assertEquals(11, c.getEnrollmentCap());
+            assertEquals(11, roll.getEnrollmentCap());
         }
         
         //Test enrollment smaller than size
-        c.enroll(s1);
-        c.enroll(s2);
-        c.enroll(s3);
-        c.enroll(s4);
-        c.enroll(s5);
-        c.enroll(s6);
-        c.enroll(s7);
-        c.enroll(s8);
-        c.enroll(s9);
-        c.enroll(s10);
-        c.enroll(s11);
+        roll.enroll(s1);
+        roll.enroll(s2);
+        roll.enroll(s3);
+        roll.enroll(s4);
+        roll.enroll(s5);
+        roll.enroll(s6);
+        roll.enroll(s7);
+        roll.enroll(s8);
+        roll.enroll(s9);
+        roll.enroll(s10);
+        roll.enroll(s11);
         try {
-            c.setEnrollmentCap(10);
+            roll.setEnrollmentCap(10);
             fail("Can't set enrolllment cap smaller than size");
         }catch (IllegalArgumentException e) {
-            assertEquals(11, c.getEnrollmentCap());
+            assertEquals(11, roll.getEnrollmentCap());
         }
         
         
         //Test valid enrollment size
         try {
-            c.setEnrollmentCap(100);
-            assertEquals(100, c.getEnrollmentCap());
+            roll.setEnrollmentCap(100);
+            assertEquals(100, roll.getEnrollmentCap());
         }catch (IllegalArgumentException e) {
             fail();   
         }
