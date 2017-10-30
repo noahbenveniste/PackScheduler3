@@ -6,7 +6,7 @@ import java.util.AbstractList;
  * Custom LinkedList array that doesn't allow null elements or duplicates and
  * has a capacity.
  * 
- * @author Brian Wu, Dustin Hollar, Hubert Ngo
+ * @author Brian Wu, Dustin Hollar, Hubert Ngo, Noah Benveniste
  * 
  * @param <E> the type of elements the list contains
  */
@@ -14,6 +14,8 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
 
     /** The first node in the list */
     private ListNode front;
+    /** The last node in the list */
+    private ListNode back;
     /** The size of the list */
     private int size;
     /** The max capacity of the list */
@@ -27,6 +29,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
      */
     public LinkedAbstractList (int capacity){
         front = null;
+        back = null;
         size = 0;
         if (capacity < 0) {
             throw new IllegalArgumentException("Invalid capacity.");
@@ -57,7 +60,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public void add(int idx, E element) {
-      //Check if the list is full
+        //Check if the list is full
         if (this.size() == this.capacity) {
             throw new IllegalArgumentException("List is full.");
         }
@@ -80,8 +83,24 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
         //Adding to the front of the list
         if (idx == 0) {
             ListNode newFront = new ListNode(element, this.front); //Make the new node point to the old front
-            this.front = newFront; //Make the front field point to the new front;
+            this.front = newFront; //Make the front field point to the new front
             this.size++;
+            if (size == 1) {
+                back = newFront;
+            }
+            return;
+        }
+        //Adding to the back of the list
+        if (idx == size) {
+            //Create a new list node that points to null
+            ListNode newBack = new ListNode(element);
+            //Make the node that back pointed to now point to the new node
+            back.next = newBack;
+            //Make the back field point to the new back
+            back = newBack;
+            //Increment the size
+            size++;
+            //Break out of the method
             return;
         }
         //Adding to the middle or end of the list
