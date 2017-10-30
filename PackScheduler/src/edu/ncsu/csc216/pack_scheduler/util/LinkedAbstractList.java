@@ -40,7 +40,6 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
     /**
      * Sets the capacity for the list
      * 
-     * @throws IllegalArguementException if the capacity is less than 0 or less than the size
      * @param capacity the capacity of the list
      * 
      */
@@ -53,7 +52,7 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
     /**
      * Adds a new element at a specified index.
      * 
-     * @param index the index to add the element at
+     * @param idx the index to add the element at
      * @param element the element to add
      * @throws IllegalArgumentException
      *              if the list has reached capacity or there is a duplicate element
