@@ -37,9 +37,9 @@ public class LinkedQueue<E> implements Queue<E> {
      */
     @Override
     public void enqueue(E element) {
-        //Add an element to the back of the queue i.e. the front of the LinkedAbstractList
+        //Add an element to the back of the queue i.e. the back of the LinkedAbstractList
         if (size < capacity) {
-            list.add(0, element);
+            list.add(size(), element);
             size++;
         } else {
             throw new IllegalArgumentException("Queue is full");
@@ -53,9 +53,9 @@ public class LinkedQueue<E> implements Queue<E> {
      */
     @Override
     public E dequeue() {
-        //Remove the element at the front of the queue i.e. the end of the LinkedAbstractList
+        //Remove the element at the front of the queue i.e. the front of the LinkedAbstractList
         if (size > 0) { 
-            E element = list.remove(list.size()-1);
+            E element = list.remove(0);
             //Decrement size
             size--;
             return element;
