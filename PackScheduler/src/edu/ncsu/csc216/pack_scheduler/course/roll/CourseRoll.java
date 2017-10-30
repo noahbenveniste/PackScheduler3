@@ -4,6 +4,7 @@ import java.util.NoSuchElementException;
 
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
+import edu.ncsu.csc216.pack_scheduler.util.LinkedQueue;
 
 /**
  * Object that creates a list of students enrolled in a class.
@@ -17,6 +18,8 @@ public class CourseRoll {
     private LinkedAbstractList<Student> roll;
     /** The roll's enrollment capacity */
     private int enrollmentCap;
+    /** Waitlist for the course */
+    private LinkedQueue<Student> waitlist;
     /** Maximum Number of Students that can enroll */
     private static final int MIN_ENROLLMENT = 10;
     /** Minimum Number of Students that can enroll */
@@ -28,6 +31,8 @@ public class CourseRoll {
     public CourseRoll(int enrollmentCap) {
         // Create the list with a capacity of enrollmentCap
         roll = new LinkedAbstractList<Student>(enrollmentCap);
+        
+        waitlist = new LinkedQueue<Student>(10);
         
         // Set enrollment cap
         setEnrollmentCap(enrollmentCap);
