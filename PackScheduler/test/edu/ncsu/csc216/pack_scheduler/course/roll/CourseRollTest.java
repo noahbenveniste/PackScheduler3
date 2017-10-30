@@ -21,7 +21,6 @@ public class CourseRollTest {
     /** Course to be used in all tests */
     private Course c;
     /** Course roll to be used in all tests */
-    @SuppressWarnings("unused")
     private CourseRoll roll;
 
     @Before
@@ -65,7 +64,7 @@ public class CourseRollTest {
     @Test
     public void testEnroll() {
         
-        CourseRoll roll = new CourseRoll(c, 10);
+        roll = new CourseRoll(c, 10);
         
         Student s1 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         Student s2 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
@@ -193,7 +192,7 @@ public class CourseRollTest {
     @Test
     public void testDrop() {
         
-        CourseRoll roll = new CourseRoll(c, 10);
+        roll = new CourseRoll(c, 10);
         
         Student s = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
         
@@ -228,7 +227,7 @@ public class CourseRollTest {
      */
     @Test
     public void testSetEnrollmentCap() {
-        CourseRoll roll = new CourseRoll(c, 11);
+        roll = new CourseRoll(c, 11);
         
         //Students that can enroll
         Student s1 = new Student("first", "last", "id", "email@ncsu.edu", "hashedpassword");
