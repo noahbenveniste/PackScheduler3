@@ -23,6 +23,8 @@ public class CourseRoll {
     private int enrollmentCap;
     /** Waitlist for the course */
     private LinkedQueue<Student> waitlist;
+    /** The course that this course roll is associated with */
+    Course course;
     /** Maximum Number of Students that can enroll */
     private static final int MIN_ENROLLMENT = 10;
     /** Minimum Number of Students that can enroll */
@@ -35,6 +37,8 @@ public class CourseRoll {
         
         if (c == null) {
             throw new IllegalArgumentException("Course parameter can't be null.");
+        } else {
+            course = c;
         }
         
         // Create the list with a capacity of enrollmentCap
@@ -134,7 +138,14 @@ public class CourseRoll {
                 if (s.equals(roll.get(i))) {
                     roll.remove(i);
                     if (getNumberOnWaitlist() > 0) {
-                        roll.add(waitlist.dequeue()); // adds the first student from the waitlist to course roll
+                        Student newStudent = waitlist.dequeue();
+                        if (newStudent.canAdd(course) && canEnroll(newStudent)) {
+                            roll.add(newStudent); // adds the first student from the waitlist to course roll
+                            newStudent.getSchedule().addCourseToSchedule(course); // add the course to the newly enrolled student's schedule
+                        } else {
+                            throw new IllegalArgumentException("First student on waitlist is either already enrolled, they have the course in "
+                                    + "their schedule, or there was a conflict with their schedule");
+                        }
                     }
                     return; // breaks from method;
                 }
