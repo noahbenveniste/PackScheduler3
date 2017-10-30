@@ -146,6 +146,14 @@ public class LinkedAbstractList<E> extends AbstractList<E> {
             temp.next = temp.next.next;
         }
         size--;
+        
+        //Make sure back references the last element in the list
+        temp = front;
+        for (int i = 0; i < size - 1; i++) {
+            temp = temp.next;
+        }
+        back = temp;
+        
         return old;
     }
     

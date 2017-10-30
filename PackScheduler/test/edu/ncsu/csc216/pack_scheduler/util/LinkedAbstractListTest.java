@@ -190,6 +190,7 @@ public class LinkedAbstractListTest {
             assertEquals(l.get(0), "one");
         }
         
+        
         // Test illegal index
         try {
             l.remove(-12);
