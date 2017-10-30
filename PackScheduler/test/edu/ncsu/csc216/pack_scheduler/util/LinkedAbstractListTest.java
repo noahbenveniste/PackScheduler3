@@ -257,9 +257,9 @@ public class LinkedAbstractListTest {
         try {
             l.setCapacity(-1);
             fail("Can't set capacity smaller than zero");
-        }catch (IllegalArgumentException e) { 
-            assertEquals(l.size(),0);
-        }
+        } catch (IllegalArgumentException e) { 
+            assertEquals(l.size(), 0);
+        } 
         
         l.add(0, "zero");
         l.add(1, "one");

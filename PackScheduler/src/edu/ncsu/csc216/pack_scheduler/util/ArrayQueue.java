@@ -55,7 +55,7 @@ public class ArrayQueue<E> implements Queue<E> {
     public E dequeue() {
         //Remove the element at the front of the queue i.e. the back of the ArrayList
         if (size > 0) {
-            E element = list.remove(list.size()-1);
+            E element = list.remove(list.size() - 1);
             //Decrement size
             size--;
             return element;
