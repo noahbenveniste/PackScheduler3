@@ -1,5 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.util;
 
+import java.util.NoSuchElementException;
+
 /**
  * Class for a queue that uses a LinkedAbstractList as its underlying list structure.
  * @author Noah Benveniste, Ben Gale, Brian Wu
@@ -37,7 +39,6 @@ public class LinkedQueue<E> implements Queue<E> {
      */
     @Override
     public void enqueue(E element) {
-        System.out.println(element);
         //Add an element to the back of the queue i.e. the back of the LinkedAbstractList
         if (size < capacity) {
             list.add(size, element);
@@ -54,16 +55,14 @@ public class LinkedQueue<E> implements Queue<E> {
      */
     @Override
     public E dequeue() {
-        System.out.print(list.size());
         //Remove the element at the front of the queue i.e. the front of the LinkedAbstractList
         if (size > 0) { 
             E element = list.remove(0);
             //Decrement size
             size--;
-            System.out.println(element);
             return element;
         } else {
-            throw new IllegalArgumentException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty");
         }
     }
 

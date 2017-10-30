@@ -2,6 +2,8 @@ package edu.ncsu.csc216.pack_scheduler.util;
 
 import static org.junit.Assert.*;
 
+import java.util.NoSuchElementException;
+
 import org.junit.Test;
 
 /**
@@ -108,6 +110,38 @@ public class ArrayQueueTest {
         assertEquals(1, q.size());
         assertEquals(s5, q.dequeue());
         assertEquals(0, q.size());
+        
+        //Try to dequeue from an empty list
+        try {
+            q.dequeue();
+        } catch (NoSuchElementException e) {
+            assertEquals("Queue is empty", e.getMessage());
+        }
+        
+        q.enqueue(s1);
+        q.dequeue();
+        assertEquals(0, q.size());
+        
+        q.enqueue(s1);
+        q.enqueue(s2);
+        q.enqueue(s3);
+        q.enqueue(s4);
+        q.enqueue(s5);
+        assertEquals(5, q.size());
+        
+        q.dequeue();
+        assertEquals(4, q.size());
+        
+        q.dequeue();
+        assertEquals(3, q.size());
+        
+        q.dequeue();
+        assertEquals(2, q.size());
+        
+        q.dequeue();
+        assertEquals(1, q.size());
+        
+        q.enqueue(s1);
     }
 
     /**

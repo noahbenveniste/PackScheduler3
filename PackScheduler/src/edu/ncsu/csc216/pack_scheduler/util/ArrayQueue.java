@@ -1,5 +1,7 @@
 package edu.ncsu.csc216.pack_scheduler.util;
 
+import java.util.NoSuchElementException;
+
 /**
  * Class for a queue that uses an ArrayList as its underlying list structure.
  * @author Noah Benveniste, Ben Gale, Brian Wu
@@ -53,7 +55,6 @@ public class ArrayQueue<E> implements Queue<E> {
      */
     @Override
     public E dequeue() {
-        System.out.println(list.size());
         //Remove the element at the front of the queue i.e. the back of the ArrayList
         if (size > 0) {
             E element = list.remove(list.size() - 1);
@@ -61,7 +62,7 @@ public class ArrayQueue<E> implements Queue<E> {
             size--;
             return element;
         } else {
-            throw new IllegalArgumentException("Queue is empty");
+            throw new NoSuchElementException("Queue is empty");
         }
     }
 
