@@ -8,7 +8,7 @@ import java.util.EmptyStackException;
 /**
  * Linked Stack that implements the methods from the stack interface
  * @author Brian Wu, Noah Beneviste, Ben Gale
- * @param E list can contain any element type
+ * @param <E> list can contain any element type
  */
 public class LinkedStack<E> implements Stack<E> {
     /** List of objects */
