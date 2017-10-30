@@ -3,8 +3,6 @@ package edu.ncsu.csc216.pack_scheduler.course.roll;
 import static org.junit.Assert.*;
 
 import java.lang.reflect.Field;
-import java.util.Queue;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,6 +21,7 @@ public class CourseRollTest {
     /** Course to be used in all tests */
     private Course c;
     /** Course roll to be used in all tests */
+    @SuppressWarnings("unused")
     private CourseRoll roll;
 
     @Before
@@ -62,6 +61,7 @@ public class CourseRollTest {
     }
 
     /** Test enroll a student */
+    @SuppressWarnings("unchecked")
     @Test
     public void testEnroll() {
         
