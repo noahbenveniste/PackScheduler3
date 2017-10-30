@@ -169,10 +169,8 @@ public class CourseRoll {
     public boolean canEnroll(Student s) {
         
         // Check for room in the class
-        if (getOpenSeats() == 0) {
-            if (waitlist.size() == 10) {
-                return false;
-            }
+        if (getOpenSeats() == 0 && (waitlist.size() == 10)) {
+            return false;
         } 
         
         
