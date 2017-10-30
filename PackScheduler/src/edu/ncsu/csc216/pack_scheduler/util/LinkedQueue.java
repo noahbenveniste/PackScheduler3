@@ -53,6 +53,7 @@ public class LinkedQueue<E> implements Queue<E> {
      */
     @Override
     public E dequeue() {
+        System.out.print(list.size());
         //Remove the element at the front of the queue i.e. the front of the LinkedAbstractList
         if (size > 0) { 
             E element = list.remove(0);
