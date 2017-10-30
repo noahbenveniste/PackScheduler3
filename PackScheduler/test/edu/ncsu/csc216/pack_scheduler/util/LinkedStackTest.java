@@ -10,7 +10,7 @@ import java.util.EmptyStackException;
 import org.junit.Test;
 
 /**
- * Test for the linked stack object
+ * Test for the linked stack object 
  * @author Bwu98
  *
  */
