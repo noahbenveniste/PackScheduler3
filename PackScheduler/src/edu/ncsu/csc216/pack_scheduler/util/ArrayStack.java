@@ -6,8 +6,11 @@ package edu.ncsu.csc216.pack_scheduler.util;
 import java.util.EmptyStackException;
 
 /**
+ * Generic ArrayStack class
+ * 
  * @author Brian Wu, Noah Beneviste, Ben Gale
  * @param <E>
+ *            generic element type
  *
  */
 public class ArrayStack<E> implements Stack<E> {
@@ -18,6 +21,12 @@ public class ArrayStack<E> implements Stack<E> {
     /** Size of list */
     private int size;
 
+    /**
+     * Constructs ArrayStack
+     * 
+     * @param capacity
+     *            the capacity of the list
+     */
     @SuppressWarnings("unchecked")
     public ArrayStack(int capacity) {
         ArrayList<Object> o = new ArrayList<Object>();
@@ -60,7 +69,7 @@ public class ArrayStack<E> implements Stack<E> {
     public void setCapacity(int capacity) {
         if (capacity < 0 || capacity < this.size) {
             throw new IllegalArgumentException(
-                    "Invalid capacity, must be greater than zero and lest than or equal to size.");
+                    "Invalid capacity, must be greater than zero and less than or equal to size.");
         }
         this.capacity = capacity;
     }
