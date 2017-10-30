@@ -2,6 +2,8 @@ package edu.ncsu.csc216.pack_scheduler.course.roll;
 
 import java.util.NoSuchElementException;
 
+import javax.swing.text.LayoutQueue;
+
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedAbstractList;
@@ -91,11 +93,19 @@ public class CourseRoll {
             throw new IllegalArgumentException("Student is null in Enroll Parameter.");
         }
         
+
+        
         try {
             
             if (canEnroll(s)) {
-                roll.add(s);
+                if (getOpenSeats() == 0) {
+                    waitlist.enqueue(s);
+                } else {
+                    roll.add(s);
+                }
             }
+            
+            
             else {
                 throw new IllegalArgumentException("Student could not be enrolled from class.");
             }
@@ -123,11 +133,23 @@ public class CourseRoll {
             for (int i = 0; i < roll.size(); i++) {
                 if (s.equals(roll.get(i))) {
                     roll.remove(i);
-                } 
+                    if (getNumberOnWaitlist() > 0) {
+                        roll.add(waitlist.dequeue()); // adds the first student from the waitlist to course roll
+                    }
+                    return; // breaks from method;
+                }
             }
+            for (int i = 0; i < getNumberOnWaitlist(); i++) {
+                Student other = waitlist.dequeue(); // removes student from waitlist and compares with parameter student
+                if (!s.equals(other)) { 
+                    waitlist.enqueue(other); // adds dequeued student back to the waitlist if not equal to parameter student
+                }
+            }
+            return; // breaks from method
         } catch (NullPointerException e) {
             throw new IllegalArgumentException("Student could not be removed from class.");
         }
+       
     }
     
     /**
@@ -139,8 +161,12 @@ public class CourseRoll {
         
         // Check for room in the class
         if (getOpenSeats() == 0) {
-            return false;
-        }
+            if (waitlist.size() == 10) {
+                return false;
+            }
+        } 
+        
+        
         
         // Student is already enrolled
         for (int i = 0; i < roll.size(); i++) {
@@ -149,7 +175,29 @@ public class CourseRoll {
                 return false;
             } 
         }
-  
-        return true;
+        
+        // Student is already in waitlist
+        boolean notOnWaitlist = true; 
+        int size = waitlist.size();
+       
+        // iterates through linked list to check if each element is equal to student
+        for (int i = 0; i < size; i++) { 
+            Student other = waitlist.dequeue();
+            if (s.equals(other)) {
+                notOnWaitlist = false;
+            }
+            waitlist.enqueue(other);
+            
+        }
+        
+        return notOnWaitlist;
+    }
+    
+    /**
+     * returns the number of students on the waitlist
+     * @return number of students on waitlist
+     */
+    public int getNumberOnWaitlist() {
+        return waitlist.size();
     }
 }
