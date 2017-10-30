@@ -4,11 +4,12 @@ package edu.ncsu.csc216.pack_scheduler.util;
  * An interface to delegate the methods that the ArrayQueue
  * and LinkedQueue classes will implement
  * @author Noah Benveniste, Ben Gale, Brian Wu
+ * @param <E> indicates that the queue can work with any element type
  */
 public interface Queue<E> {
     /**
      * Adds an element to the back of the queue
-     * @param element
+     * @param element the element to add
      */
     void enqueue(E element);
     
