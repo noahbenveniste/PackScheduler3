@@ -10,11 +10,15 @@ import java.util.EmptyStackException;
 import org.junit.Test;
 
 /**
+ * Test for the linked stack object 
  * @author Bwu98
  *
  */
 public class LinkedStackTest {
 
+    /**
+     * Test for the linked stack
+     */
     @Test
     public void test() {
         LinkedStack<Integer> a = new LinkedStack<Integer>(5);

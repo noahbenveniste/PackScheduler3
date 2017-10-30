@@ -7,7 +7,8 @@ package edu.ncsu.csc216.pack_scheduler.util;
  * Stack interface used for writing lists of items
  * 
  * @author Brian Wu, Noah Benveniste, Ben Gale
- *
+ * @param <E>
+ *            the general object to be composing the stack
  */
 public interface Stack<E> {
 
