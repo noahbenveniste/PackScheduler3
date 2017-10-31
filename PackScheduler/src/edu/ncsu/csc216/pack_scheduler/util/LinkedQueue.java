@@ -51,7 +51,7 @@ public class LinkedQueue<E> implements Queue<E> {
     /**
      * Remove the element at the front of the queue
      * @return the element at the front of the queue
-     * @throws IllegalArgumentException if the queue is empty
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public E dequeue() {

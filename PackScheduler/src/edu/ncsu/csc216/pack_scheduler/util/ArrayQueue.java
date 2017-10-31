@@ -51,7 +51,7 @@ public class ArrayQueue<E> implements Queue<E> {
     /**
      * Removes the next element from the front of the queue
      * @return the element removed from the front of the queue
-     * @throws IllegalArgumentException if the queue is empty
+     * @throws NoSuchElementException if the queue is empty
      */
     @Override
     public E dequeue() {
