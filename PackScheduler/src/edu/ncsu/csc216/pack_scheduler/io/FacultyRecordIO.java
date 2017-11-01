@@ -64,8 +64,12 @@ public class FacultyRecordIO {
 
         fileWriter = new PrintStream(new File(fileName));
         
-        for (int i = 0; i < faculties.size(); i++) {
-            fileWriter.println(faculties.listIterator(i).next().toString());
+//      for (int i = 0; i < faculties.size(); i++) {
+//          fileWriter.println(faculties.listIterator(i).next().toString());
+//      }
+        
+        for (Faculty f : faculties) {
+            fileWriter.println(f.toString());
         }
 
         fileWriter.close(); 
