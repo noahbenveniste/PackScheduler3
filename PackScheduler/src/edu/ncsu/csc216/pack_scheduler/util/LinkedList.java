@@ -8,33 +8,51 @@ import java.util.ListIterator;
  * @author Noah Benveniste
  * @author Brian Wu
  * @author Ben Gale
- * @param <E>
+ * @param <E> indicates that the list can be used with any element type
  */
 public class LinkedList<E> extends AbstractSequentialList<E> {
+    
+    /** The number of nodes in the list */
+    private int size;
+    /** Points to the first node in the list */
+    private ListNode front;
+    /** Points to the last node in the list */
+    private ListNode back;
 
     /**
-     * 
+     * Constructs an empty LinkedList
      */
-    LinkedList() {
+   public LinkedList() {
+        //Initialize nodes that represent out of bounds indices of -1 and size
+        front = new ListNode(null);
+        back = new ListNode(null);
         
+        //Make front.next point to back
+        front.next = back;
+        //Make back.prev point to front
+        back.prev = front;
+        
+        //Initialize size to zero
+        size = 0;
     }
     
     /**
-     * 
+     * Used by the client to get a list iterator
+     * @param index the index for the iterator
+     * @return a list iterator for the list
      */
     @Override
-    public ListIterator<E> listIterator(int arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public LinkedListIterator listIterator(int index) {
+        return new LinkedListIterator(index);
     }
 
     /**
-     * 
+     * Gets the number of elements currently in the list
+     * @return the size
      */
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        return size;
     }
     
     /**
@@ -44,6 +62,33 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
      * @author Ben Gale
      */
     private class ListNode {
+        
+        /** The data stored in the node */
+        private E data;
+        /** The previous node in the list */
+        private ListNode prev; 
+        /** The next node in the list */
+        private ListNode next;
+        
+        /**
+         * 
+         * @param data
+         * @param prev
+         * @param next
+         */
+        private ListNode(E data, ListNode prev, ListNode next) {
+            this.data = data;
+            this.prev = prev;
+            this.next = next;
+        }
+        
+        /**
+         * Constructs a node with null next and previous pointers
+         * @param data
+         */
+        private ListNode(E data) {
+            this(data, null, null);
+        }
         
     }
     
@@ -55,11 +100,22 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
      */
     private class LinkedListIterator implements ListIterator<E> {
 
+        /** The previous node in the list */
+        private ListNode previous;
+        /** The next node in the list */
+        private ListNode next;
+        /** The index of the previous node */
+        private int previousIndex;
+        /** The index of the next node */
+        private int nextIndex;
+        /** The last node retrieved via a call to previous() or next() */
+        private ListNode lastRetrieved;
+        
         /**
          * 
-         * @param n
+         * @param index
          */
-        public LinkedListIterator(int n) {
+        public LinkedListIterator(int index) {
             
         }
         
