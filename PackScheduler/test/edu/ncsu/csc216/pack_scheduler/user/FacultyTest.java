@@ -12,7 +12,7 @@ import org.junit.Test;
  * 
  * @author Brian Wu, Ben Gale, Noah Benveniste
  */
-public class FacultyTest1 {
+public class FacultyTest {
 
     /** First name of the faculty */
     private static final String FIRST_NAME = "First";
