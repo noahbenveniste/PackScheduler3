@@ -42,8 +42,8 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
      * @return a list iterator for the list
      */
     @Override
-    public LinkedListIterator listIterator(int index) {
-        return new LinkedListIterator(index);
+    public ListIterator<E> listIterator(int index) {
+        return (ListIterator<E>) new LinkedListIterator(index);
     }
 
     /**
@@ -113,10 +113,24 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         
         /**
          * 
-         * @param index
+         * @param index the index of the element that would be retrieved by a call to next()
+         * @throws IndexOutOfBoundsException
          */
         public LinkedListIterator(int index) {
-            
+            //Check for out of bounds index
+            if (index < 0 || index > size) {
+                throw new IndexOutOfBoundsException("Index is outside of the acceptable range [0, size-1]");
+            } else {
+                //Iterate through the list so that previous points to node at index-1 and next points to node at index
+                ListNode temp = front;
+                
+                //Set the indices
+                nextIndex = index;
+                previousIndex = index-1;
+                
+                //Initialize lastRetrieved to null
+                lastRetrieved = null;
+            }
         }
         
         /**
