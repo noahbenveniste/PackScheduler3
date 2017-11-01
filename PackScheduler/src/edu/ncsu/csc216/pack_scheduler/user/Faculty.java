@@ -96,14 +96,15 @@ public class Faculty extends User {
             return false;
         return true;
     }
-    
+
     /**
      * Returns a comma separated value String of all Faculty fields.
+     * 
      * @return String representation of Faculty
      */
     @Override
     public String toString() {
-        return super.getFirstName() + "," + super.getLastName() + "," + super.getId() + "," + super.getEmail()
-                + "," + super.getPassword() + "," + maxCourses + "";
+        return super.getFirstName() + "," + super.getLastName() + "," + super.getId() + "," + super.getEmail() + ","
+                + super.getPassword() + "," + maxCourses + "";
     }
 }
