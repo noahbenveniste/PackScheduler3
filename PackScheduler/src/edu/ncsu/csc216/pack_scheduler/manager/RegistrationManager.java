@@ -10,6 +10,7 @@ import java.util.Properties;
 import edu.ncsu.csc216.pack_scheduler.catalog.CourseCatalog;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.course.roll.CourseRoll;
+import edu.ncsu.csc216.pack_scheduler.directory.FacultyDirectory;
 import edu.ncsu.csc216.pack_scheduler.directory.StudentDirectory;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.User;
@@ -23,9 +24,10 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
  */
 public class RegistrationManager {
 
-
+    
     private static RegistrationManager instance;
     private CourseCatalog courseCatalog;
+    private FacultyDirectory facultyDirectory;
     private StudentDirectory studentDirectory;
     private User registrar;
     private User currentUser;
@@ -37,6 +39,7 @@ public class RegistrationManager {
         createRegistrar();
         courseCatalog = new CourseCatalog();
         studentDirectory = new StudentDirectory();
+        facultyDirectory = new FacultyDirectory();
     }
 
     private void createRegistrar() {
