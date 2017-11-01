@@ -30,8 +30,8 @@ public class FacultyRecordIOTest {
 
     /** Expected results for valid students */
     // MANUALLY ADD EACH FACULTY :(
-    private final LinkedList<Faculty> validFaculty = { validFaculty0, validFaculty1, validFaculty2, validFaculty3,
-            validFaculty4, validFaculty5, validFaculty6, validFaculty7 };
+    //private final LinkedList<Faculty> validFaculty = { validFaculty0, validFaculty1, validFaculty2, validFaculty3,
+    //        validFaculty4, validFaculty5, validFaculty6, validFaculty7 };
 
     private String hashPW;
     private static final String HASH_ALGORITHM = "SHA-256";
@@ -47,12 +47,12 @@ public class FacultyRecordIOTest {
             digest.update(password.getBytes());
             hashPW = new String(digest.digest());
 
-            for (Faculty f : validFaculty)
-                validFaculty[f] = validFaculty[f].replace(",pw,", "," + hashPW + ",");
+            //for (Faculty f : validFaculty)
+            //    validFaculty[f] = validFaculty[f].replace(",pw,", "," + hashPW + ",");
 
-            for (int i = 0; i < validFaculty.size(); i++) {
-                validFaculty[i] = validFaculty[i].replace(",pw,", "," + hashPW + ",");
-            }
+            //for (int i = 0; i < validFaculty.size(); i++) {
+            //    validFaculty[i] = validFaculty[i].replace(",pw,", "," + hashPW + ",");
+            //}
         } catch (NoSuchAlgorithmException e) {
             fail("Unable to create hash during setup");
         }
