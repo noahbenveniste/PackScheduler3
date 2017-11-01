@@ -2,9 +2,10 @@ package edu.ncsu.csc216.pack_scheduler.util;
 
 import java.util.AbstractSequentialList;
 import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
- * 
+ * Class for a doubly linked list that uses an iterator for traversal.
  * @author Noah Benveniste
  * @author Brian Wu
  * @author Ben Gale
@@ -45,7 +46,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
     public ListIterator<E> listIterator(int index) {
         return (ListIterator<E>) new LinkedListIterator(index);
     }
-
+    
     /**
      * Gets the number of elements currently in the list
      * @return the size
@@ -56,7 +57,9 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
     }
     
     /**
-     * 
+     * Class for a list node object that makes up a doubly linked list. The ListNode
+     * stores state for the data that it holds as well as references to the next and
+     * previous node in the list.
      * @author Noah Benveniste
      * @author Brian Wu
      * @author Ben Gale
@@ -93,7 +96,9 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
     }
     
     /**
-     * 
+     * Class for a list iterator that is used to traverse the linked list. The list iterator
+     * exists between two nodes in the list and stores state about the next and previous nodes
+     * and their respective indices as well as the last node retrieved by any method calls.
      * @author Noah Benveniste
      * @author Brian Wu
      * @author Ben Gale
@@ -123,6 +128,11 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
             } else {
                 //Iterate through the list so that previous points to node at index-1 and next points to node at index
                 ListNode temp = front;
+                for (int i = -1; i < index; i++) {
+                    temp = temp.next;
+                }
+                this.next = temp;
+                this.previous = temp.prev;
                 
                 //Set the indices
                 nextIndex = index;
@@ -134,63 +144,106 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         }
         
         /**
-         * 
+         * Adds an element between the previous and next indices. The element added
+         * becomes the element that would be returned by a subsequent call to previous()
+         * and the element that would be returned by next() is unaffected
+         * @throws NullPointerException if the element to add is null
          */
         @Override
-        public void add(E arg0) {
+        public void add(E element) {
+            if (element == null) {
+                throw new NullPointerException("Cannot add null elements");
+            }
             // TODO Auto-generated method stub
-            
+            size++;
+            nextIndex++;
+            previousIndex++;
         }
 
         /**
-         * 
+         * Checks if the list has a next element
+         * @return true if it does, false otherwise
          */
         @Override
         public boolean hasNext() {
-            // TODO Auto-generated method stub
-            return false;
+            //Check if the next node contains non-null data
+            return (this.next.data != null);
         }
 
         /**
-         * 
+         * Checks if the list has a previous element
+         * @return true if it does, false otherwise
          */
         @Override
         public boolean hasPrevious() {
-            // TODO Auto-generated method stub
-            return false;
+            //Check if the previous node contains non-null data
+            return (this.previous.data != null);
         }
 
         /**
-         * 
+         * Gets the next element in the list and moves the iterator ahead an index
+         * @return the next element in the list
+         * @throws NoSuchElementException if there is no next element
          */
         @Override
         public E next() {
-            // TODO Auto-generated method stub
-            return null;
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements in the list");
+            }
+            //Get the element to retrieve
+            E e = this.next.data;
+            
+            //Update the lastRetrieved field
+            lastRetrieved = this.next;
+            
+            //Move the iterator to the next place in the list
+            this.previous = next;
+            this.next = this.next.next;
+            
+            //Return the retrieved element
+            return e;
         }
 
         /**
-         * 
+         * Gets the index of the next element
+         * @return the index of the next element
          */
         @Override
         public int nextIndex() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        @Override
-        public E previous() {
-            // TODO Auto-generated method stub
-            return null;
+            return this.nextIndex;
         }
 
         /**
-         * 
+         * Gets the previous element in the list and moves the iterator back an index
+         * @return the previous element in the list
+         * @throws NoSuchElementException if there is no previous element
+         */
+        @Override
+        public E previous() {
+            if (!hasPrevious()) {
+                throw new NoSuchElementException("No previous elements in the list");
+            }
+            //Get the element to retrieve
+            E e = this.previous.data;
+            
+            //Update the lastRetrieved field
+            lastRetrieved = this.previous;
+            
+            //Move the iterator to the next place in the list
+            this.next = this.previous;
+            this.previous = this.previous.prev;
+            
+            //Return the retrieved element
+            return e;
+        }
+
+        /**
+         * Gets the index of the previous element
+         * @return the index of the previous element
          */
         @Override
         public int previousIndex() {
-            // TODO Auto-generated method stub
-            return 0;
+            return this.previousIndex;
         }
 
         /**
@@ -199,7 +252,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         @Override
         public void remove() {
             // TODO Auto-generated method stub
-            
+            size--;
         }
 
         /**
