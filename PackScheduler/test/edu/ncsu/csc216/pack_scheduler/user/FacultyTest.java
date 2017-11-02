@@ -20,7 +20,7 @@ public class FacultyTest {
     private static final String LAST_NAME = "Last";
     /** ID of the faculty */
     private static final String ID = "flast";
-    /** Email address of the faculty */
+    /** The Email address of the faculty */
     private static final String EMAIL = "flast@ncsu.edu";
     /** Password of the faculty */
     private static final String PASSWORD = "password";
