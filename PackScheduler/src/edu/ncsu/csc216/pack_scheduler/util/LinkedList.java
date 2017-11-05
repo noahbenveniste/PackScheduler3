@@ -7,8 +7,6 @@ import java.util.NoSuchElementException;
 /**
  * Class for a doubly linked list that uses an iterator for traversal.
  * @author Noah Benveniste
- * @author Brian Wu
- * @author Ben Gale
  * @param <E> indicates that the list can be used with any element type
  */
 public class LinkedList<E> extends AbstractSequentialList<E> {
@@ -47,6 +45,35 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         return (ListIterator<E>) new LinkedListIterator(index);
     }
     
+    /**
+     * Adds an element to the specified index in the list
+     * @throws IllegalArgumentException if the element to add is a duplicate of an element
+     * already in the list
+     */
+    @Override
+    public void add(int index, E element) {
+        //Check that the element to add isn't a duplicate
+        if (contains(element)) {
+            throw new IllegalArgumentException("Cannot add duplicate elements");
+        } else {
+            super.add(index, element);
+        }
+    }
+
+    /**
+     * Sets an element at a specified element in the list
+     * @throws IllegalArgumentException if the element to set is a duplicate of an element
+     * already in the list
+     */
+    @Override
+    public E set(int index, E element) {
+        if (contains(element)) {
+            throw new IllegalArgumentException("Cannot set duplicate elements");
+        } else {
+            return super.set(index, element);
+        }
+    }
+
     /**
      * Gets the number of elements currently in the list
      * @return the size
@@ -117,14 +144,14 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         private ListNode lastRetrieved;
         
         /**
-         * 
+         * Creates a LinkedListIterator and positions it between index-1 and index
          * @param index the index of the element that would be retrieved by a call to next()
          * @throws IndexOutOfBoundsException
          */
         public LinkedListIterator(int index) {
             //Check for out of bounds index
             if (index < 0 || index > size) {
-                throw new IndexOutOfBoundsException("Index is outside of the acceptable range [0, size-1]");
+                throw new IndexOutOfBoundsException("Index is outside of the acceptable range [0, size]");
             } else {
                 //Iterate through the list so that previous points to node at index-1 and next points to node at index
                 ListNode temp = front;
@@ -154,10 +181,27 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
             if (element == null) {
                 throw new NullPointerException("Cannot add null elements");
             }
-            // TODO Auto-generated method stub
+            //Create a node for the new data
+            ListNode newNode = new ListNode(element);
+            
+            //Make the newly added element point to the next element and the previous element
+            newNode.next = this.next;
+            newNode.prev = this.previous;
+            
+            //Make the previous element's next field point to the new element
+            this.previous.next = newNode;
+            
+            //Make the next element's previous field point to the new element
+            this.next.prev = newNode;
+            
+            //Make the previous field of the iterator point to the newly added element
+            this.previous = newNode;
+            
+            //Update the list iterator's other fields
             size++;
             nextIndex++;
             previousIndex++;
+            lastRetrieved = null;
         }
 
         /**
@@ -247,23 +291,65 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         }
 
         /**
-         * 
+         * Removes the element last returned by a call to next() or previous()
+         * @throws IllegalStateException if this method is called directly after a call
+         * to add(E) or remove(), or a call to next() or previous() has not been made,
+         * meaning the lastRetrieved field is null
          */
         @Override
         public void remove() {
-            // TODO Auto-generated method stub
+            if (this.lastRetrieved == null) {
+                throw new IllegalStateException("remove() cannot be called directly after a call to add(E) or remove() "
+                        + "or if a call to next() or previous() has not been made");
+            } 
+            
+            //Make the node that lastRetrieved's previous field pointed to have its next field point to the node that lastRetrieved's
+            //next field pointed to
+            lastRetrieved.prev.next = lastRetrieved.next;
+            
+            //Make the node that lastRetrieved's next field point to have its prev field point to the node that lastRetrieved's
+            //prev field pointed to
+            lastRetrieved.next.prev = lastRetrieved.prev;
+            
+            //If next() was called, lastRetrieved points to ListIterator.previous
+            //In this case, make the iterator's previous field point to the prev of whatever next points to
+            if ((previous.data).equals(lastRetrieved.data)) {
+                previous = next.prev;
+            //If previous() was called, lastRetrieved points to ListIterator.next
+            //In this case, make the iterator's next field point to the next of whatever previous points to
+            } else if ((next.data).equals(lastRetrieved.data)) {
+                next = previous.next;
+            //This should never be thrown, only used for debugging
+            } else {
+                throw new IllegalArgumentException("Error when reassigning list iterator fields after removal");
+            }
+            
+            //Update the other fields
             size--;
+            nextIndex--;
+            previousIndex--;
+            lastRetrieved = null;
         }
 
         /**
-         * 
+         * Sets the element last returned by a call to next() or previous()
+         * @throws IllegalStateException if this method is called directly after a call
+         * to add(E) or remove(), or a call to next() or previous() has not been made,
+         * meaning the lastRetrieved field is null
+         * @throws NullPointerException if the element to set is null
          */
         @Override
-        public void set(E arg0) {
-            // TODO Auto-generated method stub
-            
+        public void set(E element) {
+            if (this.lastRetrieved == null) {
+                throw new IllegalStateException("set(E) cannot be called directly after a call to add(E) or remove() "
+                        + "or if a call to next() or previous() has not been made");
+            } else if (element == null) {
+                throw new NullPointerException("Cannot set an element to be null");
+            } else {
+                this.lastRetrieved.data = element;
+            }
         }
         
     }
-
+    
 }

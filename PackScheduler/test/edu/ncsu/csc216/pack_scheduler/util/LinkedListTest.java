@@ -4,100 +4,324 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-
+import java.util.ListIterator;
 /**
- * 
+ * Unit tests for LinkedList
  * @author Noah Benveniste
- * @author Brian Wu
- * @author Ben Gale
  */
 public class LinkedListTest {
+    
+    /** A LinkedList object reference to be used throughout testing */
+    private LinkedList<String> list;
+    /** A ListIterator object reference to be used throughout testing */
+    private ListIterator<String> i;
 
     /**
-     * @throws java.lang.Exception
+     * Initializes objects to be used throughout testing
      */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
+        list = new LinkedList<String>();
+        i = null;
     }
 
     /**
-     * Test method for {@link edu.ncsu.csc216.pack_scheduler.util.LinkedList#size()}.
-     */
-    @Test
-    public void testSize() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link edu.ncsu.csc216.pack_scheduler.util.LinkedList#LinkedList()}.
+     * Test for constructor
      */
     @Test
     public void testLinkedList() {
-        fail("Not yet implemented");
+        assertEquals(0, list.size());
     }
 
     /**
-     * Test method for {@link edu.ncsu.csc216.pack_scheduler.util.LinkedList#listIterator(int)}.
+     * Test for listIterator(int)
      */
     @Test
     public void testListIteratorInt() {
-        fail("Not yet implemented");
+        //Try to create an iterator at an out of bounds index when the list is empty
+        try {
+            i = list.listIterator(1);
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertNull(i);
+        }
+        
+        //Try to create an iterator when the list is empty
+        i = list.listIterator(0);
+        
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        list.add(0, s1);
+        list.add(1, s2);
+        list.add(2, s3);
+        list.add(3, s4);
+        list.add(4, s5);
     }
 
-    /**
-     * Test method for {@link java.util.AbstractSequentialList#iterator()}.
-     */
-    @Test
-    public void testIterator() {
-        fail("Not yet implemented");
-    }
+//    /**
+//     * Test for size()
+//     */
+//    @Test
+//    public void testSize() {
+//        fail("Not yet implemented");
+//    }
 
     /**
-     * Test method for {@link java.util.AbstractSequentialList#get(int)}.
-     */
-    @Test
-    public void testGet() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link java.util.AbstractSequentialList#set(int, java.lang.Object)}.
-     */
-    @Test
-    public void testSet() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link java.util.AbstractSequentialList#add(int, java.lang.Object)}.
+     * Test for add(int, E)
      */
     @Test
     public void testAddIntE() {
-        fail("Not yet implemented");
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        String s6 = "f";
+        String s7 = "h";
+        String s8 = "i";
+        
+        assertEquals(0, list.size());
+        list.add(0, s1);
+        assertEquals(1, list.size());
+        list.add(1, s2);
+        assertEquals(2, list.size());
+        list.add(2, s3);
+        assertEquals(3, list.size());
+        list.add(3, s4);
+        assertEquals(4, list.size());
+        list.add(4, s5);
+        assertEquals(5, list.size());
+        
+        //Try adding outside the size of the list
+        try {
+            list.add(-1, "f");
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        try {
+            list.add(6, "f");
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Try adding a null element
+        try {
+            list.add(4, null);
+            fail();
+        } catch (NullPointerException e) {
+            assertEquals("Cannot add null elements", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Try adding a duplicate element
+        try {
+            list.add(5, s3);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot add duplicate elements", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Add to the front of the list
+        list.add(0, s6);
+        assertEquals(6, list.size());
+        assertEquals(s6, list.get(0));
+        assertEquals(s1, list.get(1));
+        assertEquals(s2, list.get(2));
+        assertEquals(s3, list.get(3));
+        assertEquals(s4, list.get(4));
+        assertEquals(s5, list.get(5));
+        
+        //Add to the middle of the list
+        list.add(3, s7);
+        assertEquals(7, list.size());
+        assertEquals(s6, list.get(0));
+        assertEquals(s1, list.get(1));
+        assertEquals(s2, list.get(2));
+        assertEquals(s7, list.get(3));
+        assertEquals(s3, list.get(4));
+        assertEquals(s4, list.get(5));
+        assertEquals(s5, list.get(6));
+        
+        
+        //Add to the back of the list
+        list.add(7, s8);
+        assertEquals(8, list.size());
+        assertEquals(s6, list.get(0));
+        assertEquals(s1, list.get(1));
+        assertEquals(s2, list.get(2));
+        assertEquals(s7, list.get(3));
+        assertEquals(s3, list.get(4));
+        assertEquals(s4, list.get(5));
+        assertEquals(s5, list.get(6));
+        assertEquals(s8, list.get(7));
     }
 
     /**
-     * Test method for {@link java.util.AbstractSequentialList#remove(int)}.
+     * Test for remove(int) [calls the method from AbstractSequentialList, used to test inner classes]
      */
     @Test
     public void testRemoveInt() {
-        fail("Not yet implemented");
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        list.add(0, s1);
+        list.add(1, s2);
+        list.add(2, s3);
+        list.add(3, s4);
+        list.add(4, s5);
+        
+        //Try removing outside the size of the list
+        try {
+            list.remove(-1);
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        try {
+            list.remove(6);
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        assertEquals(s1, list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals(s3, list.get(2));
+        assertEquals(s4, list.get(3));
+        assertEquals(s5, list.get(4));
+        
+        //Remove from the middle
+        list.remove(2);
+        assertEquals(4, list.size());
+        assertEquals(s1, list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals(s4, list.get(2));
+        assertEquals(s5, list.get(3));
+        
+        //Remove from the front
+        list.remove(0);
+        assertEquals(3, list.size());
+        assertEquals(s2, list.get(0));
+        assertEquals(s4, list.get(1));
+        assertEquals(s5, list.get(2));
+        
+        //Remove from the back
+        list.remove(2);
+        assertEquals(2, list.size());
+        assertEquals(s2, list.get(0));
+        assertEquals(s4, list.get(1));
+        
+        list.remove(0);
+        list.remove(0);
+        assertEquals(0, list.size());
+        
+        //Try removing from an empty list
+        try {
+            list.remove(0);
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals(0, list.size());
+        }
     }
 
     /**
-     * Test method for {@link java.util.AbstractSequentialList#addAll(int, java.util.Collection)}.
+     * Test for set(int, E)
      */
     @Test
-    public void testAddAllIntCollectionOfQextendsE() {
-        fail("Not yet implemented");
-    }
-
-    /**
-     * Test method for {@link java.util.AbstractSequentialList#listIterator(int)}.
-     */
-    @Test
-    public void testListIteratorInt1() {
-        fail("Not yet implemented");
+    public void testSetIntE() {
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        list.add(0, s1);
+        list.add(1, s2);
+        list.add(2, s3);
+        list.add(3, s4);
+        list.add(4, s5);
+        
+        //Try setting outside the size of the list
+        try {
+            list.set(-1, "f");
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        try {
+            list.set(6, "f");
+            fail();
+        } catch (IndexOutOfBoundsException e) {
+            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Try setting a null element
+        try {
+            list.set(4, null);
+            fail();
+        } catch (NullPointerException e) {
+            assertEquals("Cannot set an element to be null", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Try setting a duplicate element
+        try {
+            list.set(5, s3);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot set duplicate elements", e.getMessage());
+            assertEquals(5, list.size());
+        }
+        
+        //Set at the front of the list
+        list.set(0, "x");
+        assertEquals("x", list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals(s3, list.get(2));
+        assertEquals(s4, list.get(3));
+        assertEquals(s5, list.get(4));
+        assertEquals(5, list.size());
+        
+        //Set at the middle of the list
+        list.set(2, "y");
+        assertEquals("x", list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals("y", list.get(2));
+        assertEquals(s4, list.get(3));
+        assertEquals(s5, list.get(4));
+        assertEquals(5, list.size());
+        
+        //Set at the end of the list
+        list.set(4, "z");
+        assertEquals("x", list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals("y", list.get(2));
+        assertEquals(s4, list.get(3));
+        assertEquals("z", list.get(4));
+        assertEquals(5, list.size());
     }
 
 }
