@@ -68,19 +68,26 @@ public class RegistrationManagerTest {
 	@Test
 	public void testLogin() {
         manager.getStudentDirectory().loadStudentsFromFile("test-files/registration_manager_test.txt");
+        manager.getFacultyDirectory().loadFacultyFromFile("test-files/faculty_records.txt");
         assertTrue(manager.login(registrarID, registrarPass));
         assertEquals(registrarID, manager.getCurrentUser().getId());
         assertFalse(manager.login("dave", "Password1"));
         manager.logout();
-        assertFalse(manager.login("daved", "Password1"));
-        assertFalse(manager.login(registrarID, "Password1"));
-        assertTrue(manager.login("daved", "dave"));
-        manager.logout();
+        try {
+            assertFalse(manager.login("daved", "Password1"));
+            assertFalse(manager.login(registrarID, "Password1"));
+            assertTrue(manager.login("daved", "dave"));
+            manager.logout();
+        } catch (IllegalArgumentException e) {
+            assertEquals("User doesn't exist.", e.getMessage());
+        }
         try {
             assertFalse(manager.login("fakeUser", "Password1"));
         } catch (IllegalArgumentException e) {
             assertEquals("User doesn't exist.", e.getMessage());
         }
+        assertFalse(manager.login("awitt", "Password1"));
+        assertTrue(manager.login("awitt", "pw"));
 	}
 
 	/**

@@ -127,6 +127,7 @@ public class FacultyDirectory {
             }
         }
         
+
 //        for (User f : facultyDirectory) {
 //            if (f.getId().equals(facultyId)) {
 //                facultyDirectory.remove(f);

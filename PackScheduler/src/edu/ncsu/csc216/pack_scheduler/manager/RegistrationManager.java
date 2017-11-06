@@ -128,36 +128,37 @@ public class RegistrationManager {
             }
             
             Student s = studentDirectory.getStudentById(id);
-            if (s == null) {
+            Faculty f = facultyDirectory.getFacultyById(id);
+            if (s == null && f == null) {
                 throw new IllegalArgumentException("User doesn't exist.");
             }
-            try {
-                MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
-                digest.update(password.getBytes());
-                String localHashPW = new String(digest.digest());          
-                if (s != null && s.getPassword().equals(localHashPW)) {
-                    currentUser = s;
-                    return true;
+            if (s != null) {
+                try {
+                    MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+                    digest.update(password.getBytes());
+                    String localHashPW = new String(digest.digest());          
+                    if (s.getPassword().equals(localHashPW)) {
+                        currentUser = s;
+                        return true;
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    throw new IllegalArgumentException();
                 }
-            } catch (NoSuchAlgorithmException e) {
-                throw new IllegalArgumentException();
             }
             
-            Faculty f = facultyDirectory.getFacultyById(id);
-            if(f == null) {
-                throw new IllegalArgumentException("User doesn't exist.");
+            if (f != null) {
+                try {
+                    MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+                    digest.update(password.getBytes());
+                    String localHashPW = new String(digest.digest());          
+                    if (f.getPassword().equals(localHashPW)) {
+                        currentUser = f;
+                        return true;
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    throw new IllegalArgumentException();
+                }        
             }
-            try {
-                MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
-                digest.update(password.getBytes());
-                String localHashPW = new String(digest.digest());          
-                if (f != null && s.getPassword().equals(localHashPW)) {
-                    currentUser = s;
-                    return true;
-                }
-            } catch (NoSuchAlgorithmException e) {
-                throw new IllegalArgumentException();
-            }            
         }
 
         return false;
