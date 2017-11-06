@@ -164,7 +164,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
                 
                 //Set the indices
                 nextIndex = index;
-                previousIndex = index-1;
+                previousIndex = index - 1;
                 
                 //Initialize lastRetrieved to null
                 lastRetrieved = null;
@@ -314,11 +314,11 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
             
             //If next() was called, lastRetrieved points to ListIterator.previous
             //In this case, make the iterator's previous field point to the prev of whatever next points to
-            if ((previous.data).equals(lastRetrieved.data)) {
+            if (previous.data.equals(lastRetrieved.data)) {
                 previous = next.prev;
             //If previous() was called, lastRetrieved points to ListIterator.next
             //In this case, make the iterator's next field point to the next of whatever previous points to
-            } else if ((next.data).equals(lastRetrieved.data)) {
+            } else if (next.data.equals(lastRetrieved.data)) {
                 next = previous.next;
             //This should never be thrown, only used for debugging
             } else {
