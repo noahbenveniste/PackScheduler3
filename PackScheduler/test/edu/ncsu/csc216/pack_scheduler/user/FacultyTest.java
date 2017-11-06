@@ -2,6 +2,7 @@ package edu.ncsu.csc216.pack_scheduler.user;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -51,6 +52,30 @@ public class FacultyTest {
         assertFalse(f1.equals(f5));
         assertFalse(f1.equals(f6));
         assertFalse(f1.equals(f7));
+    }
+    
+    /**
+     * Test for hashCode()
+     */
+    @Test
+    public void testHashCode() {
+        User f1 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
+        User f2 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
+        User f3 = new Faculty(FIRST_NAME, "Different", ID, EMAIL, PASSWORD, MAX_COURSES);
+        User f4 = new Faculty(FIRST_NAME, LAST_NAME, "different", EMAIL, PASSWORD, MAX_COURSES);
+        User f5 = new Faculty(FIRST_NAME, LAST_NAME, ID, "email@ncsu.edu", PASSWORD, MAX_COURSES);
+        User f6 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, "hashedpassword", MAX_COURSES);
+        User f7 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, 2);
+        
+        //Test for the same hash code for the same values
+        assertEquals(f1.hashCode(), f2.hashCode());
+        
+        //Test for each of the fields
+        assertNotEquals(f1.hashCode(), f3.hashCode());
+        assertNotEquals(f1.hashCode(), f4.hashCode());
+        assertNotEquals(f1.hashCode(), f5.hashCode());
+        assertNotEquals(f1.hashCode(), f6.hashCode());
+        assertNotEquals(f1.hashCode(), f7.hashCode());
     }
 
     /**
