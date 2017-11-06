@@ -34,12 +34,6 @@ public class FacultyRecordIOTest {
     private String validFaculty6 = "Norman,Brady,nbrady,pede.nonummy@elitfermentum.co.uk,pw,1";
     private String validFaculty7 = "Lacey,Walls,lwalls,nascetur.ridiculus.mus@fermentum.net,pw,2";
 
-    /** Expected results for valid students */
-    // MANUALLY ADD EACH FACULTY :(
-    // private final LinkedList<Faculty> validFaculty = { validFaculty0,
-    // validFaculty1, validFaculty2, validFaculty3,
-    // validFaculty4, validFaculty5, validFaculty6, validFaculty7 };
-
     /** A LinkedList object reference to be used throughout testing */
     private LinkedList<Faculty> validFacultyList;
     /** A ListIterator object reference to be used throughout testing */
