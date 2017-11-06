@@ -93,6 +93,14 @@ public class RegistrationManager {
     public StudentDirectory getStudentDirectory() {
         return studentDirectory;
     }
+    
+    /**
+     * Gets the faculty directory
+     * @return faculty directory
+     */
+    public FacultyDirectory getFacultyDirectory() {
+        return facultyDirectory;
+    }
 
     /**
      * Determines if the login user id and the password matchup and returns true if they do, false if they don't
