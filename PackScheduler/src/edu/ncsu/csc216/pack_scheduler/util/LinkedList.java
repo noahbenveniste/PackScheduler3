@@ -101,6 +101,7 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
         private ListNode next;
         
         /**
+         * Updates the listnode information
          * 
          * @param data
          * @param prev

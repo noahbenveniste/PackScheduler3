@@ -56,7 +56,7 @@ public class FacultyRecordIO {
      * Writes the given list of Faculty to a given file.
      * 
      * @param fileName name of file
-     * @param Faculties LinkedList of faculties
+     * @param faculties LinkedList of faculties
      * @throws IOException Test class checks this exception
      */
     public static void writeFacultyRecords (String fileName, LinkedList<Faculty> faculties) throws IOException {
