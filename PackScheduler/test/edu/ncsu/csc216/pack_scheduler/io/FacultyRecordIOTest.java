@@ -1,9 +1,15 @@
 package edu.ncsu.csc216.pack_scheduler.io;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ListIterator;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,8 +36,14 @@ public class FacultyRecordIOTest {
 
     /** Expected results for valid students */
     // MANUALLY ADD EACH FACULTY :(
-    //private final LinkedList<Faculty> validFaculty = { validFaculty0, validFaculty1, validFaculty2, validFaculty3,
-    //        validFaculty4, validFaculty5, validFaculty6, validFaculty7 };
+    // private final LinkedList<Faculty> validFaculty = { validFaculty0,
+    // validFaculty1, validFaculty2, validFaculty3,
+    // validFaculty4, validFaculty5, validFaculty6, validFaculty7 };
+
+    /** A LinkedList object reference to be used throughout testing */
+    private LinkedList<Faculty> validFacultyList;
+    /** A ListIterator object reference to be used throughout testing */
+    private ListIterator<String> i;
 
     private String hashPW;
     private static final String HASH_ALGORITHM = "SHA-256";
@@ -41,31 +53,112 @@ public class FacultyRecordIOTest {
      */
     @Before
     public void setUp() {
+        validFacultyList.add(0, validFaculty0);
+        validFacultyList.add(1, validFaculty1);
+        validFacultyList.add(2, validFaculty2);
+        validFacultyList.add(3, validFaculty3);
+        validFacultyList.add(4, validFaculty4);
+        validFacultyList.add(5, validFaculty5);
+        validFacultyList.add(6, validFaculty6);
+        validFacultyList.add(7, validFaculty7);
+
         try {
             String password = "pw";
             MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
             digest.update(password.getBytes());
             hashPW = new String(digest.digest());
 
-            //for (Faculty f : validFaculty)
-            //    validFaculty[f] = validFaculty[f].replace(",pw,", "," + hashPW + ",");
+            for (Faculty f : validFacultyList) {
 
-            //for (int i = 0; i < validFaculty.size(); i++) {
-            //    validFaculty[i] = validFaculty[i].replace(",pw,", "," + hashPW + ",");
-            //}
+                validFacultyList[f] = validFacultyList[f].set(",pw,", "," + hashPW + ",");
+
+                // for (int i = 0; i < validFacultyList.size(); i++) {
+                // validFacultyList[i] = validFacultyList[i].replace(",pw,", "," + hashPW +
+                // ",");
+            }
         } catch (NoSuchAlgorithmException e) {
             fail("Unable to create hash during setup");
         }
     }
 
+    /**
+     * Tests readFacultyRecords().
+     */
     @Test
     public void testReadFacultyRecords() {
-        fail("Not yet implemented");
+        try {
+            LinkedList<Faculty> faculty = FacultyRecordIO.readFacultyRecords(validTestFile);
+            assertEquals(8, faculty.size());
+            // Test if list is sorted
+            assertEquals("Witt", faculty.get(0).getLastName());
+            assertEquals("Walls", faculty.get(7).getLastName());
+
+        } catch (FileNotFoundException e) {
+            fail("Unexpected error reading " + validTestFile);
+        }
+    }
+
+    /**
+     * Tests readInvalidFacultyRecords().
+     */
+    @Test
+    public void testReadInvalidFacultyRecords() {
+        LinkedList<Faculty> faculty;
+        try {
+            faculty = FacultyRecordIO.readFacultyRecords(invalidTestFile);
+
+            assertEquals(0, faculty.size());
+        } catch (FileNotFoundException | IllegalArgumentException e) {
+            fail("Unexpected FileNotFoundException, IllegalArgumentException");
+        }
+
     }
 
     @Test
     public void testWriteFacultyRecords() {
-        fail("Not yet implemented");
+        LinkedList<Faculty> faculty = new LinkedList<Faculty>();
+        faculty.add(new Faculty("Zahir", "King", "zking", "orci.Donec@ametmassaQuisque.com", hashPW, 2));
+
+        try {
+            FacultyRecordIO.writeFacultyRecords("test-files/actual_faculty_records.txt", faculty);
+        } catch (IOException e) {
+            fail("Cannot write to student records file");
+        }
+
+        checkFiles("test-files/expected_faculty_records.txt", "test-files/actual_faculty_records.txt");
+
+    }
+
+    /**
+     * Helper method to compare two files for the same contents
+     * 
+     * @param expFile
+     *            expected output
+     * @param actFile
+     *            actual output
+     */
+    private void checkFiles(String expFile, String actFile) {
+        try {
+            Scanner expScanner = new Scanner(new FileInputStream(expFile));
+            Scanner actScanner = new Scanner(new FileInputStream(actFile));
+
+            while (expScanner.hasNextLine() && actScanner.hasNextLine()) {
+                String exp = expScanner.nextLine();
+                String act = actScanner.nextLine();
+                assertEquals("Expected: " + exp + " Actual: " + act, exp, act);
+            }
+            if (expScanner.hasNextLine()) {
+                fail("The expected results expect another line " + expScanner.nextLine());
+            }
+            if (actScanner.hasNextLine()) {
+                fail("The actual results has an extra, unexpected line: " + actScanner.nextLine());
+            }
+
+            expScanner.close();
+            actScanner.close();
+        } catch (IOException e) {
+            fail("Error reading files.");
+        }
     }
 
 }
