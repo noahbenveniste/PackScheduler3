@@ -162,5 +162,29 @@ public class FacultyDirectory {
             throw new IllegalArgumentException("Unable to write to file " + fileName);
         }
     }
+    
+    /**
+     * Return a Faculty based off of ID
+     * 
+     * @param id of faculty to find
+     * @return Faculty that has the same ID as the parameter
+     */
+    public Faculty getFacultyById(String id) {
+        
+        if (id == null || id.equals("")) {
+            throw new IllegalArgumentException("Id is null or an empty String.");
+        }
+        
+        for (int i = 0; i < facultyDirectory.size(); i++) {
+            
+            // If the ID for the Faculty is equal to the parameter, return that student
+            if(id.equals(facultyDirectory.get(i).getId())) {
+                return facultyDirectory.get(i);
+            } 
+        }
+        
+        // If no faculty has that has an ID equal to the parameter, return null
+        return null;
+    }
 
 }
