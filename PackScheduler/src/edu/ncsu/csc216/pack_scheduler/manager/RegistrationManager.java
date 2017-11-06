@@ -12,6 +12,7 @@ import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.course.roll.CourseRoll;
 import edu.ncsu.csc216.pack_scheduler.directory.FacultyDirectory;
 import edu.ncsu.csc216.pack_scheduler.directory.StudentDirectory;
+import edu.ncsu.csc216.pack_scheduler.user.Faculty;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.User;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
@@ -141,6 +142,22 @@ public class RegistrationManager {
             } catch (NoSuchAlgorithmException e) {
                 throw new IllegalArgumentException();
             }
+            
+            Faculty f = facultyDirectory.getFacultyById(id);
+            if(f == null) {
+                throw new IllegalArgumentException("User doesn't exist.");
+            }
+            try {
+                MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+                digest.update(password.getBytes());
+                String localHashPW = new String(digest.digest());          
+                if (f != null && s.getPassword().equals(localHashPW)) {
+                    currentUser = s;
+                    return true;
+                }
+            } catch (NoSuchAlgorithmException e) {
+                throw new IllegalArgumentException();
+            }            
         }
 
         return false;
