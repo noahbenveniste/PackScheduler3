@@ -57,7 +57,7 @@ public class FacultyTest {
      * Tests the setMaxCourses method
      */
     @Test
-    public void TestSetMaxCoures() {
+    public void testSetMaxCoures() {
         Faculty f = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
 
         // Set courses below minimum
