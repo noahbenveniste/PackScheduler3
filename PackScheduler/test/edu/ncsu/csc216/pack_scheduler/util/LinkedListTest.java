@@ -4,6 +4,9 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ListIterator;
 /**
  * Unit tests for LinkedList
@@ -322,6 +325,58 @@ public class LinkedListTest {
         assertEquals(s4, list.get(3));
         assertEquals("z", list.get(4));
         assertEquals(5, list.size());
+    }
+    
+    /**
+     * Tests the previous() method for the iterator inner class
+     */
+    @Test
+    public void testIteratorPrevious() {
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        String[] arr = new String[5];
+        arr[0] = s1;
+        arr[1] = s2;
+        arr[2] = s3;
+        arr[3] = s4;
+        arr[4] = s5;
+        
+        
+        list.add(0, s1);
+        list.add(1, s2);
+        list.add(2, s3);
+        list.add(3, s4);
+        list.add(4, s5);
+       
+        //Creates a public instance of the LinkedListIterator to test methods on it directly
+        Class<?> listIterator = null;
+        try {
+            listIterator = Class.forName("edu.ncsu.csc216.pack_scheduler.util.LinkedList$LinkedListIterator");
+        } catch (ClassNotFoundException e) {
+            fail("Class not found");
+        }
+        
+        Method method = null;
+        try {
+            method = listIterator.getDeclaredMethod("previous");
+        } catch (NoSuchMethodException | SecurityException e) {
+            fail();
+        }
+        method.setAccessible(true);
+        
+        i = list.listIterator(3);
+        
+        try {
+            System.out.println(method.invoke(i));
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            fail();
+        }
+        
     }
 
 }
