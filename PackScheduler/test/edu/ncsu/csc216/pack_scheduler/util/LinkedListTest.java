@@ -376,7 +376,33 @@ public class LinkedListTest {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             fail();
         }
-        
     }
+    
+    /**
+     * 
+     */
+    @Test
+    public void testIndexOf() {
+        list.add("orange");
+        list.add("banana");
+        list.add("apple");
+        list.add("kiwi");
+        
+        assertEquals(0, list.indexOf("orange"));
+    }
+    
+    /**
+     * Test for lastIndexOf() method
+     */
+    @Test
+    public void testLastIndexOf() {
+        list.add("orange");
+        list.add("banana");
+        list.add("apple");
+        list.add("kiwi");
+        
+        assertEquals(0, list.lastIndexOf("orange"));
+    }
+    
 
 }

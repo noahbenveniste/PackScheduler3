@@ -245,6 +245,10 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
             this.previous = next;
             this.next = this.next.next;
             
+            //Increment the index
+            nextIndex++;
+            previousIndex++;
+            
             //Return the retrieved element
             return e;
         }
@@ -277,6 +281,10 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
             //Move the iterator to the next place in the list
             this.next = this.previous;
             this.previous = this.previous.prev;
+            
+            //Decrement the index
+            nextIndex--;
+            previousIndex--;
             
             //Return the retrieved element
             return e;
