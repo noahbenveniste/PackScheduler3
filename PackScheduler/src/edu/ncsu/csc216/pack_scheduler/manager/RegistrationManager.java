@@ -187,6 +187,7 @@ public class RegistrationManager {
         currentUser = null;
         courseCatalog.newCourseCatalog();
         studentDirectory.newStudentDirectory();
+        facultyDirectory.newFacultyDirectory();
     }
 
     /**
