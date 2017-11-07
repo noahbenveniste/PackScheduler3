@@ -379,7 +379,7 @@ public class LinkedListTest {
     }
     
     /**
-     * 
+     * Test indexOf() method
      */
     @Test
     public void testIndexOf() {
