@@ -24,7 +24,7 @@ public class CourseRoll {
     /** The course that this course roll is associated with */
     Course course;
     /** Maximum Number of Students that can enroll */
-    private static final int MIN_ENROLLMENT = 3;
+    private static final int MIN_ENROLLMENT = 10;
     /** Minimum Number of Students that can enroll */
     private static final int MAX_ENROLLMENT = 250;
 
