@@ -527,7 +527,7 @@ public class RegistrationManagerTest {
 	}
 	
 	/**
-	 * 
+	 * Tests getFacultyDirectory()
 	 */
 	@Test
 	public void testGetFacultyDirectory() {
