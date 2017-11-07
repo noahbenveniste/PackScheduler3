@@ -156,13 +156,17 @@ public class CourseRollTest {
         roll.enroll(s13);
 
         assertEquals(2, wl.size());
+        
+        for (int i = 0; i < wl.size(); i++) {
+            
+        }
 
         // Try to add a duplicate student to the waitlist
         try {
             roll.enroll(s12);
         } catch (IllegalArgumentException e) {
             assertEquals(2, wl.size());
-            assertEquals("Student could not be enrolled from class.", e.getMessage());
+            assertEquals("Cannot add duplicate elements.", e.getMessage());
         }
 
         // Test that dropping a student on the waitlist enrolls them in the course and

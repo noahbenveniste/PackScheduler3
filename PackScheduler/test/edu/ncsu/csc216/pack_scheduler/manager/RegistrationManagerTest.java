@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Properties;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +16,7 @@ import edu.ncsu.csc216.pack_scheduler.catalog.CourseCatalog;
 import edu.ncsu.csc216.pack_scheduler.directory.StudentDirectory;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
+//import edu.ncsu.csc216.pack_scheduler.util.LinkedQueue;
 
 /**
  * Tests RegistrationManager
@@ -44,6 +46,14 @@ public class RegistrationManagerTest {
         } catch (IOException e) {
             throw new IllegalArgumentException("Cannot create registrar.");
         }
+	}
+	
+	/**
+	 * Clears the manager between tests
+	 */
+	@After
+	public void tearDown() {
+	    manager.clearData();
 	}
 
 	/**
@@ -192,6 +202,137 @@ public class RegistrationManagerTest {
 	    assertEquals("9", scheduleHicksArray[2][4]);
 	    
 	    manager.logout();
+	    
+	    /** DELETE TESTS AFTER THIS POINT UPON FINAL SUBMISSION */
+//	    
+//	    manager.clearData();
+//	    directory.loadStudentsFromFile("test-files/debug_waitlist.txt");
+//	    assertEquals(13, directory.getStudentDirectory().length);
+//	    catalog.loadCoursesFromFile("test-files/course_records.txt");
+//	    assertEquals(8, catalog.getCourseCatalog().length);
+//	    
+//	    manager.login("daustin", "pw");
+//	    assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//	    String[][] s = manager.getStudentDirectory().getStudentById("daustin").getSchedule().getScheduledCourses();
+//	    
+//	    for (int i = 0; i < s.length; i++) {
+//	        for (int j = 0; j < s[i].length; j++) {
+//	            System.out.print(s[i][j]);
+//	        }
+//	        System.out.println();
+//	    }
+//	    
+//	    assertEquals(0, catalog.getCourseFromCatalog("CSC216", "001").getCourseRoll().getWaitlist().size());
+//	    
+//	    manager.logout();
+//	    
+//	    manager.login("lberg", "pw");
+//	    assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//	    
+//	    manager.logout();
+//	    
+//	    manager.login("rbrennan", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//	    
+//        manager.login("efrost", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("ahicks", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("zking", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("dnolan", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("rpuckett", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("cschwartz", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        manager.login("gstone", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        manager.logout();
+//        
+//        //The course's roll is full
+//        
+//        assertEquals(0, catalog.getCourseFromCatalog("CSC216", "001").getCourseRoll().getWaitlist().size());
+//        
+//        //Currently, if the roll is full, a student enrolled in it is added to the waitlist, but the course is still added
+//        //to their schedule
+//        manager.login("nnbenven", "pw");
+//        assertTrue(manager.enrollStudentInCourse(catalog.getCourseFromCatalog("CSC216", "001")));
+//        
+//        //Print the students in the roll
+//        for (int i = 0; i < manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getRoll().size(); i++) {
+//            System.out.println(manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getRoll().get(i));
+//        }
+//        System.out.println();
+//        
+////        //Print the students on the waitlist
+////        LinkedQueue<Student> temp = new LinkedQueue<Student>(20);
+////        Student s0 = null;
+////        
+////        for (int i = 0; i < manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getWaitlist().size(); i++) {
+////            s0 = manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getWaitlist().dequeue();
+////            System.out.println(s0.toString());
+////            temp.enqueue(s0);
+////        }
+////        System.out.println();
+////        
+////        while(!temp.isEmpty()) {
+////            manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getWaitlist().enqueue(temp.dequeue());
+////        }
+//        
+//        manager.logout();
+//        
+//        manager.login("daustin", "pw");
+//        //Try to unenroll a student in the course
+//        //Currently returns false when it should return true
+//        
+//        //also doesn't properly add the first student from the waitlist to the roll
+//        //FIGURED OUT: this is because RegistrationManager allows the course to be added to their schedule, so when CourseRoll.drop()
+//        //checks to see if the first student on the waitlist can be added, the course is already in their schedule, which means
+//        //they cannot be enrolled
+//        
+//        //also doesn't properly remove the course from the student's schedule
+//        boolean result = manager.dropStudentFromCourse(catalog.getCourseFromCatalog("CSC216", "001"));
+//        assertTrue(result);
+//        //Print the students in the roll
+//        for (int i = 0; i < manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getRoll().size(); i++) {
+//            System.out.println(manager.getCourseCatalog().getCourseFromCatalog("CSC216", "001").getCourseRoll().getRoll().get(i));
+//        }
+//        System.out.println();
+//        
+//        s = manager.getStudentDirectory().getStudentById("daustin").getSchedule().getScheduledCourses();
+//        
+//        if (s.length == 0) {
+//            System.out.println("Schedule is empty");
+//        }
+//        
+//        for (int i = 0; i < s.length; i++) {
+//            for (int j = 0; j < s[i].length; j++) {
+//                System.out.print(s[i][j]);
+//            }
+//            System.out.println();
+//        }
 	}
 
 	/**
@@ -383,5 +524,13 @@ public class RegistrationManagerTest {
 	    assertEquals(0, scheduleHicksArray.length);
 	    
 	    manager.logout();
+	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void testGetFacultyDirectory() {
+	    assertEquals(0, manager.getFacultyDirectory().getFacultyDirectory().length);
 	}
 }

@@ -24,7 +24,7 @@ public class CourseRoll {
     /** The course that this course roll is associated with */
     Course course;
     /** Maximum Number of Students that can enroll */
-    private static final int MIN_ENROLLMENT = 10;
+    private static final int MIN_ENROLLMENT = 3;
     /** Minimum Number of Students that can enroll */
     private static final int MAX_ENROLLMENT = 250;
 
@@ -176,42 +176,53 @@ public class CourseRoll {
     }
 
     /**
-     * Check to find out if a student can be added to the class.
+     * Check to find out if a student can be added to the class or the waitlist.
      * 
      * @param s
      *            student to add to the class
      * @return true if student can be added, false otherwise
      */
     public boolean canEnroll(Student s) {
-
-        // Check for room in the class
+        // Check if the student is already on the roll
+        if (roll.contains(s)) {
+            return false;
+        }
+        
+        // Check if there is room in the roll or the waitlist
         if (getOpenSeats() == 0 && (waitlist.size() == 10)) {
             return false;
         }
+        
+        return true;
 
-        // Student is already enrolled
-        for (int i = 0; i < roll.size(); i++) {
-
-            if (s.compareTo(roll.get(i)) == 0) {
-                return false;
-            }
-        }
-
-        // Student is already in waitlist
-        boolean notOnWaitlist = true;
-        int size = waitlist.size();
-
-        // iterates through linked list to check if each element is equal to student
-        for (int i = 0; i < size; i++) {
-            Student other = waitlist.dequeue();
-            if (s.equals(other)) {
-                notOnWaitlist = false;
-            }
-            waitlist.enqueue(other);
-
-        }
-
-        return notOnWaitlist;
+        // Removed check for if the student was already on the waitlist, as this would break functionality in the drop() method, which
+        // would return false when checking to see if a student on the waitlist could be enrolled in the course because the method would
+        // see that they were already on the waitlist and return false.
+        // Checking for duplicates on the waitlist is handled by the queue
+        
+//        // Student is already enrolled
+//        for (int i = 0; i < roll.size(); i++) {
+//
+//            if (s.compareTo(roll.get(i)) == 0) {
+//                return false;
+//            }
+//        }
+//
+//        // Student is already in waitlist
+//        boolean notOnWaitlist = true;
+//        int size = waitlist.size();
+//
+//        // iterates through linked list to check if each element is equal to student
+//        for (int i = 0; i < size; i++) {
+//            Student other = waitlist.dequeue();
+//            if (s.equals(other)) {
+//                notOnWaitlist = false;
+//            }
+//            waitlist.enqueue(other);
+//
+//        }
+//
+//        return notOnWaitlist;
     }
 
     /**
@@ -222,4 +233,13 @@ public class CourseRoll {
     public int getNumberOnWaitlist() {
         return waitlist.size();
     }
+    
+//    //Remove before submission
+//    public LinkedQueue<Student> getWaitlist() {
+//        return waitlist;
+//    }
+//    
+//    public LinkedAbstractList<Student> getRoll() {
+//        return roll;
+//    }
 }

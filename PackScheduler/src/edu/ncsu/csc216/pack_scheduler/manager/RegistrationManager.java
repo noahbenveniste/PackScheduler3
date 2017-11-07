@@ -181,7 +181,7 @@ public class RegistrationManager {
     }
 
     /**
-     * Sets the current user back to null and clears all data from courseCatalog and studentDirectory
+     * Sets the current user back to null and clears all data from courseCatalog, studentDirectory and facultyDirectory
      */
     public void clearData() {
         currentUser = null;
@@ -221,8 +221,13 @@ public class RegistrationManager {
             CourseRoll roll = c.getCourseRoll();
             
             if (s.canAdd(c) && roll.canEnroll(s)) {
-                schedule.addCourseToSchedule(c);
+                //Either adds the student to the course or the waitlist if there is room and the student is not on either of them
                 roll.enroll(s);
+                // Before adding the course to the student's schedule, check that they are actually on the roll
+                // i.e. nobody should be on the waitlist
+                if (roll.getNumberOnWaitlist() == 0) {
+                    schedule.addCourseToSchedule(c);
+                }
                 return true;
             }
             
