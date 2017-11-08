@@ -122,10 +122,10 @@ public class FacultyTest {
     public void testIsOverloaded() {
         Faculty f = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
 
-        Course c1 = new Course("CSC116", "comp", "001", 4, "bob", 10, "M");
-        Course c2 = new Course("CSC117", "compu", "002", 3, "bobb", 10, "T");
-        Course c3 = new Course("CSC118", "comput", "003", 3, "bobbb", 10, "W");
-        Course c4 = new Course("CSC119", "compute", "004", 3, "bobbbb", 10, "F");
+        Course c1 = new Course("CSC116", "comp", "001", 4, null, 10, "M");
+        Course c2 = new Course("CSC117", "compu", "002", 3, null, 10, "T");
+        Course c3 = new Course("CSC118", "comput", "003", 3, null, 10, "W");
+        Course c4 = new Course("CSC119", "compute", "004", 3, null, 10, "F");
 
         FacultySchedule facultySchedule = new FacultySchedule(ID);
 
