@@ -53,7 +53,7 @@ public class FacultyTest {
         assertFalse(f1.equals(f6));
         assertFalse(f1.equals(f7));
     }
-    
+
     /**
      * Test for hashCode()
      */
@@ -66,11 +66,11 @@ public class FacultyTest {
         User f5 = new Faculty(FIRST_NAME, LAST_NAME, ID, "email@ncsu.edu", PASSWORD, MAX_COURSES);
         User f6 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, "hashedpassword", MAX_COURSES);
         User f7 = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, 2);
-        
-        //Test for the same hash code for the same values
+
+        // Test for the same hash code for the same values
         assertEquals(f1.hashCode(), f2.hashCode());
-        
-        //Test for each of the fields
+
+        // Test for each of the fields
         assertNotEquals(f1.hashCode(), f3.hashCode());
         assertNotEquals(f1.hashCode(), f4.hashCode());
         assertNotEquals(f1.hashCode(), f5.hashCode());
@@ -110,5 +110,21 @@ public class FacultyTest {
         User f = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
         String s1 = "First,Last,flast,flast@ncsu.edu,password,3";
         assertEquals(s1, f.toString());
+    }
+
+    /**
+     * Tests the getSchedule method
+     */
+    @Test
+    public void testGetSchedule() {
+        fail();
+    }
+
+    /**
+     * Tests the isOverloaded method
+     */
+    @Test
+    public void testIsOverloaded() {
+        fail();
     }
 }
