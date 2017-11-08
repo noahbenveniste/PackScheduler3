@@ -3,6 +3,8 @@
  */
 package edu.ncsu.csc216.pack_scheduler.user;
 
+import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
+
 /**
  * The object representing a faculty user
  * 
@@ -19,9 +21,12 @@ public class Faculty extends User {
     /** The maximum amount of courses faculty is allowed to teach in a semester */
     public static final int MAX_COURSES = 3;
 
+    /** The faculty schedule */
+    private FacultySchedule fSchedule;
+
     /**
      * Creates a student with the given first name, last name, id, email, password,
-     * and number of courses to teach this semestser
+     * and number of courses to teach this semester
      * 
      * @param firstName
      *            Faculty user's first name
@@ -39,6 +44,7 @@ public class Faculty extends User {
     public Faculty(String firstName, String lastName, String id, String email, String password, int maxCourses) {
         super(firstName, lastName, id, email, password);
         setMaxCourses(maxCourses);
+        fSchedule = new FacultySchedule(id);
     }
 
     /**
@@ -61,6 +67,28 @@ public class Faculty extends User {
      */
     public int getMaxCourses() {
         return this.maxCourses;
+    }
+
+    /**
+     * Gets the faculty schedule
+     * 
+     * @return the faculty schedule
+     */
+    public FacultySchedule getSchedule() {
+        return fSchedule;
+    }
+
+    /**
+     * If the number of courses the faculty is scheduled for is greater than the
+     * MAX_COURSES returns true.
+     * 
+     * @return true if scheduled courses larger than MAX_COURSES, otherwise false
+     */
+    public boolean isOverloaded() {
+        if (fSchedule.getNumScheduledCourses() > MAX_COURSES) {
+            return true;
+        }
+        return false;
     }
 
     /**
