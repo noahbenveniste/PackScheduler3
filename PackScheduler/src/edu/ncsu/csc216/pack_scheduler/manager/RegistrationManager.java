@@ -276,4 +276,37 @@ public class RegistrationManager {
             //do nothing 
         }
     }
+    
+    /**
+     * Faculty's faculty schedule is updated with the new Course
+     * @param c
+     * @param f
+     * @return
+     */
+    public boolean addFacultyToCourse(Course c, Faculty f) {
+        f.getSchedule().addCourseToSchedule(c);
+     
+        return true;
+    }
+    
+    /**
+     * Faculty's faculty schedule removes the course from the schedule
+     * @param c
+     * @param f
+     * @return
+     */
+    public boolean removeFacultyToCourse(Course c, Faculty f) {
+        f.getSchedule().removeCourseFromSchedule(c);
+        
+        return true;
+    }
+    
+    /**
+     * Resets the Faculty's schedule
+     * @param f
+     */
+    public void resetFacultySchedule(Faculty f) {
+        f.getSchedule().resetSchedule();
+    }
+    
 }
