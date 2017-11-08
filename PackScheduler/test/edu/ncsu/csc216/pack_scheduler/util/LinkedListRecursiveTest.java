@@ -5,8 +5,6 @@ package edu.ncsu.csc216.pack_scheduler.util;
 
 import static org.junit.Assert.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,14 +14,16 @@ import org.junit.Test;
  *
  */
 public class LinkedListRecursiveTest {
+    
+    /** A LinkedListRecursive object reference to be used throughout testing */
+    private LinkedListRecursive<String> list;
 
     /**
      * Initializes objects to be used throughout testing
      */
     @Before
-    public void setUp() {
+    public void setUp(LinkedListRecursive<String> list) {
         list = new LinkedListRecursive<String>();
-        i = null;
     }
 
     /**
@@ -34,43 +34,6 @@ public class LinkedListRecursiveTest {
         assertEquals(0, list.size());
     }
 
-    /**
-     * Test for listIterator(int)
-     */
-    @Test
-    public void testListIteratorInt() {
-        //Try to create an iterator at an out of bounds index when the list is empty
-        try {
-            i = list.listIterator(1);
-        } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
-            assertNull(i);
-        }
-        
-        //Try to create an iterator when the list is empty
-        i = list.listIterator(0);
-        
-        //Add some elements to the list
-        String s1 = "a";
-        String s2 = "b";
-        String s3 = "c";
-        String s4 = "d";
-        String s5 = "e";
-        
-        list.add(0, s1);
-        list.add(1, s2);
-        list.add(2, s3);
-        list.add(3, s4);
-        list.add(4, s5);
-    }
-
-//    /**
-//     * Test for size()
-//     */
-//    @Test
-//    public void testSize() {
-//        fail("Not yet implemented");
-//    }
 
     /**
      * Test for add(int, E)
@@ -351,29 +314,7 @@ public class LinkedListRecursiveTest {
         list.add(3, s4);
         list.add(4, s5);
        
-        //Creates a public instance of the LinkedListIterator to test methods on it directly
-        Class<?> listIterator = null;
-        try {
-            listIterator = Class.forName("edu.ncsu.csc216.pack_scheduler.util.LinkedList$LinkedListIterator");
-        } catch (ClassNotFoundException e) {
-            fail("Class not found");
-        }
-        
-        Method method = null;
-        try {
-            method = listIterator.getDeclaredMethod("previous");
-        } catch (NoSuchMethodException | SecurityException e) {
-            fail();
-        }
-        method.setAccessible(true);
-        
-        i = list.listIterator(3);
-        
-        try {
-            System.out.println(method.invoke(i));
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            fail();
-        }
+      
     }
     
     /**
