@@ -8,6 +8,9 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import edu.ncsu.csc216.pack_scheduler.course.Course;
+import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
+
 /**
  * Tests the Faculty class
  * 
@@ -113,18 +116,28 @@ public class FacultyTest {
     }
 
     /**
-     * Tests the getSchedule method
-     */
-    @Test
-    public void testGetSchedule() {
-        fail();
-    }
-
-    /**
      * Tests the isOverloaded method
      */
     @Test
     public void testIsOverloaded() {
-        fail();
+        Faculty f = new Faculty(FIRST_NAME, LAST_NAME, ID, EMAIL, PASSWORD, MAX_COURSES);
+
+        Course c1 = new Course("CSC116", "comp", "001", 4, "bob", 10, "M");
+        Course c2 = new Course("CSC117", "compu", "002", 3, "bobb", 10, "T");
+        Course c3 = new Course("CSC118", "comput", "003", 3, "bobbb", 10, "W");
+        Course c4 = new Course("CSC119", "compute", "004", 3, "bobbbb", 10, "F");
+
+        FacultySchedule facultySchedule = new FacultySchedule(ID);
+
+        // Not overloaded for less than 4 courses
+        facultySchedule.addCourseToSchedule(c1);
+        assertFalse(f.isOverloaded());
+        facultySchedule.addCourseToSchedule(c2);
+        facultySchedule.addCourseToSchedule(c3);
+        assertFalse(f.isOverloaded());
+
+        // adds 4th course and faculty is overloaded
+        facultySchedule.addCourseToSchedule(c4);
+        assertTrue(f.isOverloaded());
     }
 }
