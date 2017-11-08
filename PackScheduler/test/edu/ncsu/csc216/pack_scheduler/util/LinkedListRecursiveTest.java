@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.ncsu.csc216.pack_scheduler.util;
 
 import static org.junit.Assert.*;
@@ -8,6 +5,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.ncsu.csc216.pack_scheduler.util.LinkedListRecursive;
 
 /**
  * @author Brian Wu, Noah Benveniste, Ben Gale
@@ -22,7 +21,7 @@ public class LinkedListRecursiveTest {
      * Initializes objects to be used throughout testing
      */
     @Before
-    public void setUp(LinkedListRecursive<String> list) {
+    public void setUp() {
         list = new LinkedListRecursive<String>();
     }
 
@@ -67,7 +66,7 @@ public class LinkedListRecursiveTest {
             list.add(-1, "f");
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -75,7 +74,7 @@ public class LinkedListRecursiveTest {
             list.add(6, "f");
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -286,61 +285,6 @@ public class LinkedListRecursiveTest {
         assertEquals(s4, list.get(3));
         assertEquals("z", list.get(4));
         assertEquals(5, list.size());
-    }
-    
-    /**
-     * Tests the previous() method for the iterator inner class
-     */
-    @Test
-    public void testIteratorPrevious() {
-        //Add some elements to the list
-        String s1 = "a";
-        String s2 = "b";
-        String s3 = "c";
-        String s4 = "d";
-        String s5 = "e";
-        
-        String[] arr = new String[5];
-        arr[0] = s1;
-        arr[1] = s2;
-        arr[2] = s3;
-        arr[3] = s4;
-        arr[4] = s5;
-        
-        
-        list.add(0, s1);
-        list.add(1, s2);
-        list.add(2, s3);
-        list.add(3, s4);
-        list.add(4, s5);
-       
-      
-    }
-    
-    /**
-     * Test indexOf() method
-     */
-    @Test
-    public void testIndexOf() {
-        list.add("orange");
-        list.add("banana");
-        list.add("apple");
-        list.add("kiwi");
-        
-        assertEquals(0, list.indexOf("orange"));
-    }
-    
-    /**
-     * Test for lastIndexOf() method
-     */
-    @Test
-    public void testLastIndexOf() {
-        list.add("orange");
-        list.add("banana");
-        list.add("apple");
-        list.add("kiwi");
-        
-        assertEquals(0, list.lastIndexOf("orange"));
     }
 
 }
