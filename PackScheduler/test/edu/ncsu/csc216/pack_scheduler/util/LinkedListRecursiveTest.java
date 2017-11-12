@@ -154,7 +154,7 @@ public class LinkedListRecursiveTest {
             list.remove(-1);
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -162,7 +162,7 @@ public class LinkedListRecursiveTest {
             list.remove(6);
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -229,7 +229,7 @@ public class LinkedListRecursiveTest {
             list.set(-1, "f");
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -237,7 +237,7 @@ public class LinkedListRecursiveTest {
             list.set(6, "f");
             fail();
         } catch (IndexOutOfBoundsException e) {
-            assertEquals("Index is outside of the acceptable range [0, size]", e.getMessage());
+            assertEquals("Index is outside of the acceptable range", e.getMessage());
             assertEquals(5, list.size());
         }
         
@@ -246,13 +246,13 @@ public class LinkedListRecursiveTest {
             list.set(4, null);
             fail();
         } catch (NullPointerException e) {
-            assertEquals("Cannot set an element to be null", e.getMessage());
+            assertEquals("Cannot set null elements", e.getMessage());
             assertEquals(5, list.size());
         }
         
         //Try setting a duplicate element
         try {
-            list.set(5, s3);
+            list.set(4, s3);
             fail();
         } catch (IllegalArgumentException e) {
             assertEquals("Cannot set duplicate elements", e.getMessage());

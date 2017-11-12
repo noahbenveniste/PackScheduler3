@@ -85,6 +85,14 @@ public class LinkedListRecursive<E> {
         //Check for null elements
         } else if (e == null) {
             throw new NullPointerException("Cannot add null elements");
+        //Adding to the front of the list
+        } else if (index == 0) {
+            //Create a new list node that points to what the current front points to
+            ListNode newNode = new ListNode(e, front);
+            //Make front point to the new node
+            this.front = newNode;
+            //Increment the size
+            size++;
         //Adding to the end of the list
         } else if (index == size) {
             add(e);
@@ -162,13 +170,25 @@ public class LinkedListRecursive<E> {
     }
     
     /**
-     * 
+     * Sets an element at a specified index in the list
      * @param index
      * @param e
-     * @return
+     * @return the data that was overwritten at the specified index
      */
     public E set(int index, E e) {
-        return null;
+        //Bounds checking
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index is outside of the acceptable range");
+        //Check for null element being set
+        } else if (e == null) {
+            throw new NullPointerException("Cannot set null elements");
+        //Check for duplicates
+        } else if (this.contains(e)) {
+            throw new IllegalArgumentException("Cannot set duplicate elements");
+        //Call method that handles recursion if inputs are valid
+        } else {
+            return front.set(index, e);
+        }
     }
     
     /**
@@ -239,13 +259,15 @@ public class LinkedListRecursive<E> {
          * @param index
          * @param e
          */
-        private void add(int index, E e) {
+        private void add(int index, E e) { 
             //Reached the node just before the index we want to add at
             if (index == 1) {
                 //Make the new node point to this node's next field
                 ListNode newNode = new ListNode(e, next);
                 //Make this node point to the new node
                 next = newNode;
+                //Increment the size
+                size++;
             //Recursive call
             } else {
                 index--;
@@ -268,8 +290,8 @@ public class LinkedListRecursive<E> {
         }
         
         /**
-         * Recursively removes an element at a specified index from the list using a lookahead
-         * technique by decrementing the passed index before each recursive method call.
+         * Recursively removes an element at a specified index from the list using a look ahead
+         * algorithm by decrementing the passed index before each recursive method call.
          * @param index
          * @return
          */
@@ -292,12 +314,25 @@ public class LinkedListRecursive<E> {
         }
         
         /**
-         * 
+         * Recursively removes a specified element from the list using a look ahead algorithm
          * @param e
          * @return
          */
         private boolean remove(E e) {
-            return false;
+            //Check if the next node in the list is null, meaning the end of the list has been reached
+            if (next == null) {
+                return false;
+            //Look ahead to see if the data in the next node is the data we want to remove
+            } else if ((next.data).equals(e)) {
+                //Make this node point to the node that remove element pointed to
+                this.next = this.next.next;
+                //Decrement the size
+                size--;
+                return true;
+            //Recursive call
+            } else {
+                return next.equals(e);
+            }
         }
         
         /**
@@ -307,7 +342,18 @@ public class LinkedListRecursive<E> {
          * @return
          */
         private E set(int index, E e) {
-            return null;
+            //Reached the node we want to set at
+            if (index == 0) {
+                //Store the old data, overwrite the data field with the input data, return the old data
+                E oldData  = this.data;
+                this.data = e;
+                return oldData;
+            //Recursive call if we haven't reached the desired index
+            } else {
+                //Decrement index, pass new value to recursive method call
+                index--;
+                return next.set(index, e);
+            }
         }
         
     }
