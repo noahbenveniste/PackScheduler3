@@ -6,9 +6,7 @@ package edu.ncsu.csc216.pack_scheduler.util;
  * @author Brian Wu
  */
 public class LinkedListRecursive<E> {
-    
-    //THROWAWAY COMMENT
-    
+
     /** */
     private ListNode front;
     /** */
@@ -331,7 +329,7 @@ public class LinkedListRecursive<E> {
                 return true;
             //Recursive call
             } else {
-                return next.equals(e);
+                return next.remove(e);
             }
         }
         

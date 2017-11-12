@@ -286,5 +286,116 @@ public class LinkedListRecursiveTest {
         assertEquals("z", list.get(4));
         assertEquals(5, list.size());
     }
+    
+    /**
+     * Test method for add(E)
+     */
+    @Test
+    public void testAddE() {
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        assertEquals(0, list.size());
+        list.add(s1);
+        assertEquals(1, list.size());
+        assertEquals(s1, list.get(0));
+        list.add(s2);
+        assertEquals(2, list.size());
+        assertEquals(s1, list.get(0));
+        assertEquals(s2, list.get(1));
+        list.add(s3);
+        assertEquals(3, list.size());
+        assertEquals(s1, list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals(s3, list.get(2));
+        
+        //Try adding a null element
+        try {
+            list.add(null);
+        } catch (NullPointerException e) {
+            assertEquals("Cannot add null elements", e.getMessage());
+            assertEquals(3, list.size());
+            assertEquals(s1, list.get(0));
+            assertEquals(s2, list.get(1));
+            assertEquals(s3, list.get(2));
+        }
+        
+        //Try adding a duplicate element
+        try {
+            list.add(s1);
+        } catch (IllegalArgumentException e) {
+            assertEquals("Cannot add duplicate elements", e.getMessage());
+            assertEquals(3, list.size());
+            assertEquals(s1, list.get(0));
+            assertEquals(s2, list.get(1));
+            assertEquals(s3, list.get(2));
+        }
+    }
+    
+    /**
+     * Test method for remove(E)
+     */
+    @Test
+    public void testRemoveE() {
+        //Try removing from an empty list
+        assertEquals(0, list.size());
+        assertFalse(list.remove("a"));
+        
+        //Add some elements to the list
+        String s1 = "a";
+        String s2 = "b";
+        String s3 = "c";
+        String s4 = "d";
+        String s5 = "e";
+        
+        list.add(0, s1);
+        
+        //Try removing null
+        try {
+            list.remove(null);
+        } catch (NullPointerException e) {
+            assertEquals("Cannot remove null", e.getMessage());
+            assertEquals(1, list.size());
+        }
+        
+        //Try removing an element not in the list
+        assertFalse(list.remove("x"));
+        
+        //Remove from a list that contains only one element
+        assertTrue(list.remove(s1));
+        assertEquals(0, list.size());
+        
+        //Add some more elements
+        list.add(0, s1);
+        list.add(1, s2);
+        list.add(2, s3);
+        list.add(3, s4);
+        list.add(4, s5);
+        
+        //Remove the element from the middle of the list
+        list.remove(s3);
+        assertEquals(4, list.size());
+        assertEquals(s1, list.get(0));
+        assertEquals(s2, list.get(1));
+        assertEquals(s4, list.get(2));
+        assertEquals(s5, list.get(3));
+        
+        //Remove the element from the front of the list
+        list.remove(s1);
+        assertEquals(3, list.size());
+        assertEquals(s2, list.get(0));
+        assertEquals(s4, list.get(1));
+        assertEquals(s5, list.get(2));
+        
+        //Remove the element from the back of the list
+        list.remove(s5);
+        assertEquals(2, list.size());
+        assertEquals(s2, list.get(0));
+        assertEquals(s4, list.get(1));
+    }
 
 }
