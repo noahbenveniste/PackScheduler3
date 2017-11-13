@@ -118,13 +118,14 @@ public class CourseRecordIO {
                     s.close();
                     throw new IllegalArgumentException();
                 }
-                c = new Course(name, title, section, credits, instructorId, enrollmentCap, meetingDays);
+                // Initialize courses to have a null instructor parameter
+                c = new Course(name, title, section, credits, null, enrollmentCap, meetingDays);
             } else {
                 // Scan the start and end time, check if input is valid
                 startTime = s.nextInt();
                 endTime = s.nextInt();
 
-                c = new Course(name, title, section, credits, instructorId, enrollmentCap, meetingDays, startTime,
+                c = new Course(name, title, section, credits, null, enrollmentCap, meetingDays, startTime,
                         endTime);
             }
 
@@ -133,12 +134,15 @@ public class CourseRecordIO {
              * the faculty member's schedule
              */
             if (RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId) != null) {
+                // If the faculty exists, add the course to their schedule
                 RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId).getSchedule()
                         .addCourseToSchedule(c);
-
-            } else {
-                c.setInstructorId(null); // @ben this may be wrong
-            }
+                // Then assign that faculty to the course
+                c.setInstructorId(instructorId);
+            } 
+//            else {
+//                c.setInstructorId(null); // @ben this may be wrong
+//            }
         } catch (NoSuchElementException e) {
             s.close();
             throw new IllegalArgumentException();
