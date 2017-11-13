@@ -9,8 +9,8 @@ import org.junit.Test;
 import edu.ncsu.csc216.pack_scheduler.util.LinkedListRecursive;
 
 /**
+ * Unit tests for LinkedListRecursive
  * @author Brian Wu, Noah Benveniste, Ben Gale
- *
  */
 public class LinkedListRecursiveTest {
     
@@ -296,8 +296,6 @@ public class LinkedListRecursiveTest {
         String s1 = "a";
         String s2 = "b";
         String s3 = "c";
-        String s4 = "d";
-        String s5 = "e";
         
         assertEquals(0, list.size());
         list.add(s1);

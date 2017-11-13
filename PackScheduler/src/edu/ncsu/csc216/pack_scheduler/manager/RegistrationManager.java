@@ -328,7 +328,7 @@ public class RegistrationManager {
     
     /**
      * Resets the Faculty's schedule
-     * @param f
+     * @param f the faculty whose schedule is being reset
      * @throws IllegalArgumentException if the registrar is not the current user
      */
     public void resetFacultySchedule(Faculty f) {
