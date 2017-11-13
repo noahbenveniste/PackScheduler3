@@ -533,4 +533,28 @@ public class RegistrationManagerTest {
 	public void testGetFacultyDirectory() {
 	    assertEquals(0, manager.getFacultyDirectory().getFacultyDirectory().length);
 	}
+	
+	/**
+	 * Tests addFacultyToCourse()
+	 */
+	@Test
+	public void testAddFacultyToCourse() {
+	    
+	}
+	
+	/**
+	 * Tests removeFacultyFromCourse()
+	 */
+	@Test
+	public void testRemoveFacultyFromCourse() {
+	    
+	}
+	
+	/**
+	 * Tests resetFacultySchedule()
+	 */
+	@Test
+	public void testResetFacultySchedule() {
+	    
+	}
 }
