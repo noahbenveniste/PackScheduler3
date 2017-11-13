@@ -84,6 +84,15 @@ public class LinkedList<E> extends AbstractSequentialList<E> {
     }
     
     /**
+     * Checks if the list is empty or not
+     * @return true if the list has no elements in it, false otherwise
+     */
+    @Override
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+    
+    /**
      * Class for a list node object that makes up a doubly linked list. The ListNode
      * stores state for the data that it holds as well as references to the next and
      * previous node in the list.
