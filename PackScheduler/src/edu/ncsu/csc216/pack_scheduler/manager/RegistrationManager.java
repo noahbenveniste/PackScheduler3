@@ -25,17 +25,26 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
  */
 public class RegistrationManager {
 
-    
+    /** Singleton instance */
     private static RegistrationManager instance;
+    /** Catalog of courses for the instance */
     private CourseCatalog courseCatalog;
+    /** Faculty directory for the instance */
     private FacultyDirectory facultyDirectory;
+    /** Student directory for the instance */
     private StudentDirectory studentDirectory;
+    /** The registrar, read in from registrar.properties */
     private User registrar;
+    /** The currently logged in user */
     private User currentUser;
     /** Hashing algorithm */
     private static final String HASH_ALGORITHM = "SHA-256";
+    /** The registrar.properties file */
     private static final String PROP_FILE = "registrar.properties";
 
+    /** 
+     * Constructs a RegistrationManager instance if getInstance() hasn't been called yet
+     */
     private RegistrationManager() {
         createRegistrar();
         courseCatalog = new CourseCatalog();
@@ -43,6 +52,9 @@ public class RegistrationManager {
         facultyDirectory = new FacultyDirectory();
     }
 
+    /**
+     * Creates the registrar user for the registrar field by reading in data from PROP_FILE
+     */
     private void createRegistrar() {
         Properties prop = new Properties();
 
@@ -58,6 +70,11 @@ public class RegistrationManager {
         }
     }
 
+    /**
+     * Returns a hash string for an input password
+     * @param pw the user's password
+     * @return the hash of the password string
+     */
     private String hashPW(String pw) {
         try {
             MessageDigest digest1 = MessageDigest.getInstance(HASH_ALGORITHM);
