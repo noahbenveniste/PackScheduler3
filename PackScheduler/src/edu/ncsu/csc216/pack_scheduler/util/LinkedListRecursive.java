@@ -7,7 +7,7 @@ package edu.ncsu.csc216.pack_scheduler.util;
  * null elements.
  * @author Noah Benveniste
  * @author Brian Wu
- * @param E indicates that the list can work with any object or primitive type
+ * @param <E> indicates that the list can work with any object or primitive type
  */
 public class LinkedListRecursive<E> {
 
