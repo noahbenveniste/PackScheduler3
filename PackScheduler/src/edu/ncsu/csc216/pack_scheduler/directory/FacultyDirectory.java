@@ -169,9 +169,9 @@ public class FacultyDirectory {
      */
     public Faculty getFacultyById(String id) {
         
-        if (id == null || id.equals("")) {
-            throw new IllegalArgumentException("Id is null or an empty String.");
-        }
+//        if (id == null || id.equals("")) {
+//            throw new IllegalArgumentException("Id is null or an empty String.");
+//        }
         
         for (int i = 0; i < facultyDirectory.size(); i++) {
             
