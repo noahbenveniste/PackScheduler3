@@ -203,6 +203,14 @@ public class LinkedListRecursive<E> {
     public int size() {
         return size;
     }
+    
+    /**
+     * 
+     * @return
+     */
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
     /**
      * 
