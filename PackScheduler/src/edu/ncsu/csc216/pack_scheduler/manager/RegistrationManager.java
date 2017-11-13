@@ -296,9 +296,10 @@ public class RegistrationManager {
     
     /**
      * Faculty's faculty schedule is updated with the new Course
-     * @param c
-     * @param f
-     * @return
+     * @param c the course to add to the schedule
+     * @param f the faculty whose schedule is being updated
+     * @return true if the schedule was updated with the new course
+     * @throws IllegalArgumentException if the registrar is not logged in when the method is called
      */
     public boolean addFacultyToCourse(Course c, Faculty f) {
         if (!(this.currentUser.getId()).equals(registrar.getId())) {
@@ -311,9 +312,10 @@ public class RegistrationManager {
     
     /**
      * Faculty's faculty schedule removes the course from the schedule
-     * @param c
-     * @param f
-     * @return
+     * @param c the course to remove from the schedule
+     * @param f the faculty whose schedule is being updated
+     * @return true if the schedule was updated to remove the course
+     * @throws IllegalArgumentException if the registrar is not logged in when the method is called
      */
     public boolean removeFacultyFromCourse(Course c, Faculty f) {
         if (!(this.currentUser.getId()).equals(registrar.getId())) {
