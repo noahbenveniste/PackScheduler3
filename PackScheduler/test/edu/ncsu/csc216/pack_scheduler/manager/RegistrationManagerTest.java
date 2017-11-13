@@ -13,7 +13,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.ncsu.csc216.pack_scheduler.catalog.CourseCatalog;
+import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.directory.StudentDirectory;
+import edu.ncsu.csc216.pack_scheduler.user.Faculty;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.Schedule;
 //import edu.ncsu.csc216.pack_scheduler.util.LinkedQueue;
@@ -539,7 +541,30 @@ public class RegistrationManagerTest {
 	 */
 	@Test
 	public void testAddFacultyToCourse() {
+	    //Try adding when the registrar isn't logged in
+	    manager.getCourseCatalog().loadCoursesFromFile("test-files/course_records.txt");
+	    assertEquals(8, manager.getCourseCatalog().getCourseCatalog().length);
+	    manager.getFacultyDirectory().loadFacultyFromFile("test-files/faculty_records_extended.txt");
+	    assertEquals(16, manager.getFacultyDirectory().getFacultyDirectory().length);
+	    manager.getStudentDirectory().loadStudentsFromFile("test-files/student_records.txt");
+	    assertEquals(10, manager.getStudentDirectory().getStudentDirectory().length);
 	    
+	    manager.login("daustin", "pw");
+        assertEquals("daustin", manager.getCurrentUser().getId());
+        Course c = manager.getCourseCatalog().getCourseFromCatalog("CSC116", "001");
+        Faculty f = manager.getFacultyDirectory().getFacultyById("jdyoung2");
+        
+	    try {
+	        manager.addFacultyToCourse(c, f);
+	        fail();
+	    } catch (IllegalArgumentException e) {
+	        assertEquals("Registrar needs to be logged in to add a faculty to a course", e.getMessage());
+	    }
+	    manager.logout();
+	    //Log in with the registrar, add the faculty to the course
+	    manager.login(registrarID, registrarPass);
+	    manager.addFacultyToCourse(c, f);
+	    assertEquals(f.getId(), c.getInstructorId());
 	}
 	
 	/**
@@ -547,7 +572,39 @@ public class RegistrationManagerTest {
 	 */
 	@Test
 	public void testRemoveFacultyFromCourse() {
-	    
+	    //Try adding when the registrar isn't logged in
+        manager.getCourseCatalog().loadCoursesFromFile("test-files/course_records.txt");
+        assertEquals(8, manager.getCourseCatalog().getCourseCatalog().length);
+        manager.getFacultyDirectory().loadFacultyFromFile("test-files/faculty_records_extended.txt");
+        assertEquals(16, manager.getFacultyDirectory().getFacultyDirectory().length);
+        manager.getStudentDirectory().loadStudentsFromFile("test-files/student_records.txt");
+        assertEquals(10, manager.getStudentDirectory().getStudentDirectory().length);
+        
+        manager.login(registrarID, registrarPass);
+        Course c = manager.getCourseCatalog().getCourseFromCatalog("CSC116", "001");
+        Faculty f = manager.getFacultyDirectory().getFacultyById("jdyoung2");
+        manager.addFacultyToCourse(c, f);
+        assertEquals(f.getId(), c.getInstructorId());
+        manager.logout();
+        
+        manager.login("daustin", "pw");
+        assertEquals("daustin", manager.getCurrentUser().getId());
+        
+        //Try to remove a faculty when the registrar is not logged in
+        try {
+            manager.removeFacultyFromCourse(c, f);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Registrar needs to be logged in to remove a faculty from a course", e.getMessage());
+        }
+        
+        manager.logout();
+        
+        //Log in as the registrar, remove the faculty from the course
+        manager.login(registrarID, registrarPass);
+        manager.removeFacultyFromCourse(c, f);
+        assertNull(c.getInstructorId());
+        assertEquals(0, f.getSchedule().getNumScheduledCourses());
 	}
 	
 	/**
@@ -555,6 +612,39 @@ public class RegistrationManagerTest {
 	 */
 	@Test
 	public void testResetFacultySchedule() {
-	    
+	    //Try adding when the registrar isn't logged in
+        manager.getCourseCatalog().loadCoursesFromFile("test-files/course_records.txt");
+        assertEquals(8, manager.getCourseCatalog().getCourseCatalog().length);
+        manager.getFacultyDirectory().loadFacultyFromFile("test-files/faculty_records_extended.txt");
+        assertEquals(16, manager.getFacultyDirectory().getFacultyDirectory().length);
+        manager.getStudentDirectory().loadStudentsFromFile("test-files/student_records.txt");
+        assertEquals(10, manager.getStudentDirectory().getStudentDirectory().length);
+        
+        manager.login(registrarID, registrarPass);
+        Course c = manager.getCourseCatalog().getCourseFromCatalog("CSC116", "001");
+        Faculty f = manager.getFacultyDirectory().getFacultyById("jdyoung2");
+        manager.addFacultyToCourse(c, f);
+        assertEquals(f.getId(), c.getInstructorId());
+        manager.logout();
+        
+        manager.login("daustin", "pw");
+        assertEquals("daustin", manager.getCurrentUser().getId());
+        
+        //Try to reset a faculty's schedule when the registrar isn't logged in
+        try {
+            manager.resetFacultySchedule(f);
+            fail();
+        } catch (IllegalArgumentException e) {
+            assertEquals("Registrar needs to be logged in to reset a faculty schedule", e.getMessage());
+            assertEquals(1, f.getSchedule().getNumScheduledCourses());
+        }
+        
+        //Log in as the registrar, reset the faculty's schedule
+        manager.logout();
+        manager.login(registrarID, registrarPass);
+        assertEquals(registrarID, manager.getCurrentUser().getId());
+        manager.resetFacultySchedule(f);
+        assertNull(c.getInstructorId());
+        assertEquals(0, f.getSchedule().getNumScheduledCourses());
 	}
 }
