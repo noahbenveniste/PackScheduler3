@@ -153,11 +153,14 @@ public class LinkedListRecursive<E> {
      * @return
      */
     public boolean remove(E e) {
+        /**
         // Check if the element is null
         if (e == null) {
             throw new NullPointerException("Cannot remove null");
             // Check if the list is empty
-        } else if (size == 0) {
+        } else 
+        */
+        if (size == 0) {
             return false;
             // Check if the list doesn't contain the element
         } else if (!contains(e)) {
