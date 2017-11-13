@@ -12,7 +12,7 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
  */
 public class Faculty extends User {
 
-    /** The number of courses the facult is going to teach this semester */
+    /** The number of courses the faculty is going to teach this semester */
     private int maxCourses;
 
     /** The minimum amount of courses faculty is allowed to teach in a semester */

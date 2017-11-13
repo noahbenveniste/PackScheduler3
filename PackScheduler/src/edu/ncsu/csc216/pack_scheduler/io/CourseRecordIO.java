@@ -91,12 +91,6 @@ public class CourseRecordIO {
 
         try {
 
-            // FacultyDirectory fDirectory = new FacultyDirectory();
-            //// fDirectory.loadFacultyFromFile("test-files/faculty_records.txt");
-            //
-            //
-            //
-
             // Scan the name
             name = s.next();
             // Scan the title

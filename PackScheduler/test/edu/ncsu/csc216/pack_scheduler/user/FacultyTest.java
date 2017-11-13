@@ -127,17 +127,18 @@ public class FacultyTest {
         Course c3 = new Course("CSC118", "comput", "003", 3, null, 10, "W");
         Course c4 = new Course("CSC119", "compute", "004", 3, null, 10, "F");
 
-        FacultySchedule facultySchedule = new FacultySchedule(ID);
+        FacultySchedule fSchedule = new FacultySchedule(ID);
 
         // Not overloaded for less than 4 courses
-        facultySchedule.addCourseToSchedule(c1);
+        fSchedule.addCourseToSchedule(c1);
         assertFalse(f.isOverloaded());
-        facultySchedule.addCourseToSchedule(c2);
-        facultySchedule.addCourseToSchedule(c3);
+        fSchedule.addCourseToSchedule(c2);
+        fSchedule.addCourseToSchedule(c3);
         assertFalse(f.isOverloaded());
 
         // adds 4th course and faculty is overloaded
-        facultySchedule.addCourseToSchedule(c4);
+        fSchedule.addCourseToSchedule(c4);
+        assertEquals(4, fSchedule.getNumScheduledCourses());
         assertTrue(f.isOverloaded());
     }
 }
