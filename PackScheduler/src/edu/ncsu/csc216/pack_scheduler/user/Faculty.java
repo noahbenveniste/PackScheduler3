@@ -85,7 +85,7 @@ public class Faculty extends User {
      * @return true if scheduled courses larger than MAX_COURSES, otherwise false
      */
     public boolean isOverloaded() {
-        if (fSchedule.getNumScheduledCourses() > MAX_COURSES) {
+        if (fSchedule.getNumScheduledCourses() > maxCourses) {
             return true;
         }
         return false;

@@ -135,6 +135,9 @@ public class CourseRecordIO {
             if (RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId) != null) {
                 RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId).getSchedule()
                         .addCourseToSchedule(c);
+
+            } else {
+                c.setInstructorId(null); // @ben this may be wrong
             }
         } catch (NoSuchElementException e) {
             s.close();

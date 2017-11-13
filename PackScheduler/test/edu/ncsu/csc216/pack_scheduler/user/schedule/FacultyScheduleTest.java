@@ -176,6 +176,7 @@ public class FacultyScheduleTest {
         // Add a third course
         Course csc116 = catalog.getCourseFromCatalog("CSC116", "002");
         schedule.addCourseToSchedule(csc116);
+        assertEquals(3, schedule.getNumScheduledCourses());
         assertTrue("After adding 3 courses when max courses is 2, faculty is overloaded, but returned false",
                 f.isOverloaded());
     }
