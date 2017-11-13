@@ -243,13 +243,13 @@ public class FacultyDirectoryTest {
         // Verify if an ID is not found
         assertNull(fd.getFacultyById("dsgd"));
 
-        // Test Invalid Input: null
-        try {
-            fd.getFacultyById(null);
-            fail();
-        } catch (IllegalArgumentException e) {
-            assertEquals("Id is null or an empty String.", e.getMessage());
-        }
+//        // Test Invalid Input: null
+//        try {
+//            fd.getFacultyById(null);
+//            fail();
+//        } catch (IllegalArgumentException e) {
+//            assertEquals("Id is null or an empty String.", e.getMessage());
+//        }
 
         // Test Invalid Input: empty string
         try {
