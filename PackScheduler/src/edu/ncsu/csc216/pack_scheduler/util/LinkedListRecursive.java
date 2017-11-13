@@ -1,16 +1,18 @@
 package edu.ncsu.csc216.pack_scheduler.util;
 
 /**
- * A linked list that uses recursion for its method implementations.
- * 
+ * A linked list that uses recursion for its method implementations. Functions identically to the other lists
+ * we've implemented from the client's perspective with some additional functionality, including the ability
+ * to remove elements by entering the element to remove, rather than its index. Does not allow duplicate or
+ * null elements.
  * @author Noah Benveniste
  * @author Brian Wu
  */
 public class LinkedListRecursive<E> {
 
-    /** */
+    /** Points to the front of the list */
     private ListNode front;
-    /** */
+    /** The number of elements currently in the list */
     private int size;
 
     /**
@@ -24,9 +26,10 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * 
-     * @param e
-     * @return
+     * Checks if the list contains a specified element. Handles the special case of
+     * the list being empty. Otherwise, calls the method that handles recursion.
+     * @param e the element to check the list for
+     * @return true if the list contains the element, false otherwise.
      */
     public boolean contains(E e) {
         // Check if the list is empty
@@ -39,13 +42,12 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * Adds an element to the end of the list
-     * 
-     * @param e
-     * @throws IllegalArgumentException
-     * @throws NullPointerException
-     *             if the element to add is null
-     * @return
+     * Adds an element to the end of the list. Handles the special case of adding an element
+     * to an empty list. Otherwise, calls the method that handles recursion.
+     * @param e the element to add
+     * @throws IllegalArgumentException if the element is already in the list
+     * @throws NullPointerException if the element to add is null
+     * @return true if the element was added
      */
     public boolean add(E e) {
         // Check if the list already contains the element being added
@@ -69,13 +71,13 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * 
-     * @param index
-     * @param e
-     * @throws IllegalArgumentException
-     * @throws IndexOutOfBoundsException
-     * @throws NullPointerException
-     *             if the element to add is null
+     * Adds an element at a specified index to the list. Handles the special case of adding
+     * to the front of the list. Otherwise, calls the method that handles recursion.
+     * @param index the index to add the element at
+     * @param e the element to add
+     * @throws IllegalArgumentException if the element is a duplicate of an element already in the list
+     * @throws IndexOutOfBoundsException if the index is not on the range [0, size)
+     * @throws NullPointerException if the element to add is null
      */
     public void add(int index, E e) {
         // Check if the list already contains the element being added
@@ -105,10 +107,10 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * 
-     * @param index
-     * @return
-     * @throws IndexOutOfBoundsException
+     * Gets the element at a specified index
+     * @param index the index of the element
+     * @return the element at the index
+     * @throws IndexOutOfBoundsException if the index is not on the range [0, size)
      */
     public E get(int index) {
         // Check for out of bounds index
@@ -121,10 +123,10 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * Removes an element at a specified index
-     * 
-     * @param index
-     * @return
+     * Removes an element at a specified index.
+     * @param index the index of the element to remove
+     * @return the element data belonging to the removed element
+     * @throws IndexOutOfBoundsException if the specified index is not on the range [0, size)
      */
     public E remove(int index) {
         // Check for out of bounds index
@@ -147,10 +149,11 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * Removes a specified element
-     * 
-     * @param e
-     * @return
+     * Removes a specified element from the list. Handles the special case of the element
+     * to remove being the first element in the list. Otherwise, calls the method that 
+     * handles recursion.
+     * @param e the element to remove
+     * @return true if the element was removed, false if it was not i.e. it was not in the list
      */
     public boolean remove(E e) {
         /**
@@ -166,7 +169,7 @@ public class LinkedListRecursive<E> {
         } else if (!contains(e)) {
             return false;
             // Special case of removing the first element in the list
-        } else if ((front.data).equals(e)) {
+        } else if (front.data.equals(e)) {
             front = front.next;
             size--;
             return true;
@@ -178,10 +181,12 @@ public class LinkedListRecursive<E> {
 
     /**
      * Sets an element at a specified index in the list
-     * 
-     * @param index
-     * @param e
+     * @param index the index of the element to set
+     * @param e the element data to overwrite the specified index with
      * @return the data that was overwritten at the specified index
+     * @throws IndexOutOfBoundsException if the index is not in the range [0, size)
+     * @throws NullPointerException if the element to set is null
+     * @throws IllegalArgumentException if the element to set is a duplicate of an element already in the list
      */
     public E set(int index, E e) {
         // Bounds checking
@@ -200,37 +205,37 @@ public class LinkedListRecursive<E> {
     }
 
     /**
-     * 
-     * @return
+     * Returns the number of elements in the list
+     * @return the number of elements in the list
      */
     public int size() {
         return size;
     }
     
     /**
-     * 
-     * @return
+     * Checks if the list contains an elements
+     * @return true if the list empty, false if it is not
      */
     public boolean isEmpty() {
         return size == 0;
     }
 
     /**
-     * 
+     * A list node that composes a linked list
      * @author Noah Benveniste
      * @author Brian Wu
      */
     private class ListNode {
 
-        /** */
+        /** Stores an element that the node represents */
         private E data;
-        /** */
+        /** A pointer to the next node in the list */
         private ListNode next;
 
         /**
-         * 
-         * @param data
-         * @param next
+         * Constructs a list node with a specified data value and a pointer to another node
+         * @param data the element that the node represents
+         * @param next a pointer to the next node in the list
          */
         public ListNode(E data, ListNode next) {
             this.data = data;
@@ -238,26 +243,26 @@ public class LinkedListRecursive<E> {
         }
 
         /**
-         * 
-         * @param e
-         * @return
+         * Checks if the list contains a specified element recursively
+         * @param e the element to check the list for
+         * @return true if the list contains e, false otherwise
          */
         private boolean contains(E e) {
             // If the node we're at contains the data, return true
-            if ((data).equals(e)) {
+            if (data.equals(e)) {
                 return true;
                 // Base case where the end of the list is reached without finding the element
             } else if (next == null) {
                 return false;
                 // If not, recursive call on the next node
             } else {
-                return (next).contains(e);
+                return next.contains(e);
             }
         }
 
         /**
-         * 
-         * @param e
+         * Adds an element to the end of the list recursively
+         * @param e the element to add
          */
         private void add(E e) {
             // Base case where the end of the list is reached, just add the node
@@ -271,9 +276,10 @@ public class LinkedListRecursive<E> {
         }
 
         /**
-         * 
-         * @param index
-         * @param e
+         * Adds an element at a specified index recursively using a look ahead
+         * algorithm by decrementing the passed index before each recursive method call
+         * @param index the index where the new element is being added
+         * @param e the element to add
          */
         private void add(int index, E e) {
             // Reached the node just before the index we want to add at
@@ -292,9 +298,9 @@ public class LinkedListRecursive<E> {
         }
 
         /**
-         * 
-         * @param index
-         * @return
+         * Gets an element at a specified index recursively
+         * @param index the index of the element to get
+         * @return the element data at the specified index
          */
         private E get(int index) {
             if (index == 0) {
@@ -309,9 +315,8 @@ public class LinkedListRecursive<E> {
          * Recursively removes an element at a specified index from the list using a
          * look ahead algorithm by decrementing the passed index before each recursive
          * method call.
-         * 
-         * @param index
-         * @return
+         * @param index the index of the element to remove
+         * @return the element data at the index of the removed element
          */
         private E remove(int index) {
             // At the element just before the element to remove
@@ -334,9 +339,8 @@ public class LinkedListRecursive<E> {
         /**
          * Recursively removes a specified element from the list using a look ahead
          * algorithm
-         * 
-         * @param e
-         * @return
+         * @param e the element to remove
+         * @return true if the element was removed, false if it wasn't i.e. the element wasn't in the list
          */
         private boolean remove(E e) {
             // Check if the next node in the list is null, meaning the end of the list has
@@ -344,7 +348,7 @@ public class LinkedListRecursive<E> {
             if (next == null) {
                 return false;
                 // Look ahead to see if the data in the next node is the data we want to remove
-            } else if ((next.data).equals(e)) {
+            } else if (next.data.equals(e)) {
                 // Make this node point to the node that remove element pointed to
                 this.next = this.next.next;
                 // Decrement the size
@@ -357,10 +361,10 @@ public class LinkedListRecursive<E> {
         }
 
         /**
-         * 
-         * @param index
-         * @param e
-         * @return
+         * Sets an element at a specified index recursively
+         * @param index the index of the element to set
+         * @param e the element to set
+         * @return the old element data at the specified index
          */
         private E set(int index, E e) {
             // Reached the node we want to set at
