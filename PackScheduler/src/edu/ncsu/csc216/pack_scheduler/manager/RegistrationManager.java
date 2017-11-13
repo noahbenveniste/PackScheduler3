@@ -295,7 +295,7 @@ public class RegistrationManager {
      * @param f
      * @return
      */
-    public boolean removeFacultyToCourse(Course c, Faculty f) {
+    public boolean removeFacultyFromCourse(Course c, Faculty f) {
         f.getSchedule().removeCourseFromSchedule(c);
         
         return true;
