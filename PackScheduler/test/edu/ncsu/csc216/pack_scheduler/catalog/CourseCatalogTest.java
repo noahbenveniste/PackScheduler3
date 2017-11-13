@@ -131,7 +131,7 @@ public class CourseCatalogTest {
 		assertNull(cs1.getCourseFromCatalog("CSC492", "001"));
 		
 		//Attempt to get a course that does exist
-		Course c = new Course(NAME, TITLE, SECTION, CREDITS, INSTRUCTOR_ID, ENROLL_CAP, MEETING_DAYS, START_TIME, END_TIME);
+		Course c = new Course(NAME, TITLE, SECTION, CREDITS, null, ENROLL_CAP, MEETING_DAYS, START_TIME, END_TIME);
 		assertEquals(c, cs1.getCourseFromCatalog("CSC216", "001"));    
 		}
     
