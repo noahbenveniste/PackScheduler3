@@ -3,12 +3,15 @@ package edu.ncsu.csc216.pack_scheduler.io;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 //import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.junit.Before;
@@ -16,6 +19,7 @@ import org.junit.Test;
 
 import edu.ncsu.csc216.collections.list.SortedList;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
+import edu.ncsu.csc216.pack_scheduler.manager.RegistrationManager;
 
 /**
  * Tests CouresRecordIO.
@@ -42,6 +46,15 @@ public class CourseRecordIOTest {
     private final String [] validCourses = {validCourse1, validCourse2, validCourse3, validCourse4,
             validCourse5, validCourse6, validCourse7, validCourse8};
 
+    /** Manager to be used throughout tests */
+    private RegistrationManager manager;
+    
+    /** Registrar ID to be used throughout tests */
+    private String registrarID;
+    
+    /** Registrar password to be used throughout tests */
+    private String registrarPass;
+    
     /**
      * Resets course_records.txt for use in other tests.
      * @throws IOException if file cannot be reset.
@@ -57,6 +70,17 @@ public class CourseRecordIOTest {
         } catch (IOException e) {
             fail("Unable to reset files");
         }
+        
+        manager = RegistrationManager.getInstance();
+        manager.clearData();
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("registrar.properties")) {
+            prop.load(input);
+            registrarID = prop.getProperty("id");
+            registrarPass = prop.getProperty("pw");
+        } catch (IOException e) {
+            throw new IllegalArgumentException("Cannot create registrar.");
+        }
     }   
     
     /**
@@ -64,6 +88,9 @@ public class CourseRecordIOTest {
      */
     @Test
     public void testReadValidCourseRecords() {
+        manager.login(registrarID, registrarPass);
+        manager.getFacultyDirectory().loadFacultyFromFile("test-files/faculty_records_extended.txt");
+        assertEquals(16, manager.getFacultyDirectory().getFacultyDirectory().length);
         try {
             SortedList<Course> courses = CourseRecordIO.readCourseRecords(validTestFile);
             assertEquals(8, courses.size());
