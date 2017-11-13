@@ -127,7 +127,7 @@ public class FacultyTest {
         Course c3 = new Course("CSC118", "comput", "003", 3, null, 10, "W");
         Course c4 = new Course("CSC119", "compute", "004", 3, null, 10, "F");
 
-        FacultySchedule fSchedule = new FacultySchedule(ID);
+        FacultySchedule fSchedule = f.getSchedule();
 
         // Not overloaded for less than 4 courses
         fSchedule.addCourseToSchedule(c1);

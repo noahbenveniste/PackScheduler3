@@ -106,16 +106,7 @@ public class CourseRecordIO {
             // Scan the meeting days
             meetingDays = s.next();
 
-            RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId);
-
-            /*
-             * Checks if there is a Faculty with the given ID, if so the course is added to
-             * the faculty member's schedule
-             */
-            if (RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId) != null) {
-                RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId).getSchedule()
-                        .addCourseToSchedule(c);
-            }
+            // RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId);
 
             /*
              * If meeting days is equal to A, call the constructor without start and end
@@ -135,6 +126,15 @@ public class CourseRecordIO {
 
                 c = new Course(name, title, section, credits, instructorId, enrollmentCap, meetingDays, startTime,
                         endTime);
+            }
+
+            /*
+             * Checks if there is a Faculty with the given ID, if so the course is added to
+             * the faculty member's schedule
+             */
+            if (RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId) != null) {
+                RegistrationManager.getInstance().getFacultyDirectory().getFacultyById(instructorId).getSchedule()
+                        .addCourseToSchedule(c);
             }
         } catch (NoSuchElementException e) {
             s.close();
