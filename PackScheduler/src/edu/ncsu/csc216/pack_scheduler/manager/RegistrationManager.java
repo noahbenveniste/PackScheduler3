@@ -284,9 +284,12 @@ public class RegistrationManager {
      * @return
      */
     public boolean addFacultyToCourse(Course c, Faculty f) {
-        f.getSchedule().addCourseToSchedule(c);
-     
-        return true;
+        if (!(this.currentUser.getId()).equals(registrar.getId())) {
+            throw new IllegalArgumentException("Registrar needs to be logged in to add a faculty to a course");
+        } else {
+            f.getSchedule().addCourseToSchedule(c);
+            return true;
+        }
     }
     
     /**
@@ -296,17 +299,25 @@ public class RegistrationManager {
      * @return
      */
     public boolean removeFacultyFromCourse(Course c, Faculty f) {
-        f.getSchedule().removeCourseFromSchedule(c);
-        
-        return true;
+        if (!(this.currentUser.getId()).equals(registrar.getId())) {
+            throw new IllegalArgumentException("Registrar needs to be logged in to remove a faculty from a course");
+        } else {
+            f.getSchedule().removeCourseFromSchedule(c);
+            return true;
+        }
     }
     
     /**
      * Resets the Faculty's schedule
      * @param f
+     * @throws IllegalArgumentException if the registrar is not the current user
      */
     public void resetFacultySchedule(Faculty f) {
-        f.getSchedule().resetSchedule();
+        if (!(this.currentUser.getId()).equals(registrar.getId())) {
+            throw new IllegalArgumentException("Registrar needs to be logged in to reset a faculty schedule");
+        } else {
+            f.getSchedule().resetSchedule(); 
+        }
     }
     
 }
