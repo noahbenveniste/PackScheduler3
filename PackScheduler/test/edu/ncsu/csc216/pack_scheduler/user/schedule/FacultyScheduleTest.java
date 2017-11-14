@@ -30,6 +30,7 @@ public class FacultyScheduleTest {
 
     /**
      * Resets course_records.txt for use in other tests.
+     * @throws Exception if it is unable to reset files
      */
     @Before
     public void setUp() throws Exception {
