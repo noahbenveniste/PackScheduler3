@@ -9,7 +9,7 @@ import edu.ncsu.csc216.pack_scheduler.course.validator.InvalidTransitionExceptio
  * credits, instructorId, days the course meets, and start/end time of the
  * course.
  * 
- * @author Dustin Hollar
+ * @author Brian Wu, Noah Benveniste, Ben Gale
  */
 public class Course extends Activity implements Comparable<Course> {
 

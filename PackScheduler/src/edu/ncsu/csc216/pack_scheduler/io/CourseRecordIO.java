@@ -63,7 +63,8 @@ public class CourseRecordIO {
     }
 
     /**
-     * Scans the line of a file into a Course object. Uses ',' as a Delimiter
+     * Scans the line of a file into a Course object. Uses ',' as a Delimiter,
+     * checks if faculty ID is related to course and if so adds faculty to course
      * 
      * @param nextLine
      *            line from the file to scan
@@ -125,8 +126,7 @@ public class CourseRecordIO {
                 startTime = s.nextInt();
                 endTime = s.nextInt();
 
-                c = new Course(name, title, section, credits, null, enrollmentCap, meetingDays, startTime,
-                        endTime);
+                c = new Course(name, title, section, credits, null, enrollmentCap, meetingDays, startTime, endTime);
             }
 
             /*
@@ -139,10 +139,10 @@ public class CourseRecordIO {
                         .addCourseToSchedule(c);
                 // Then assign that faculty to the course
                 c.setInstructorId(instructorId);
-            } 
-//            else {
-//                c.setInstructorId(null); // @ben this may be wrong
-//            }
+            }
+            // else {
+            // c.setInstructorId(null); // @ben this may be wrong
+            // }
         } catch (NoSuchElementException e) {
             s.close();
             throw new IllegalArgumentException();

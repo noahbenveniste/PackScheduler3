@@ -21,7 +21,7 @@ public class Faculty extends User {
     /** The maximum amount of courses faculty is allowed to teach in a semester */
     public static final int MAX_COURSES = 3;
 
-    /** The faculty schedule */
+    /** The faculty schedule of courses to teach */
     private FacultySchedule fSchedule;
 
     /**
