@@ -279,6 +279,7 @@ public class Course extends Activity implements Comparable<Course> {
 
         return shortDisplayArray;
     }
+    
 
     /**
      * Displays the name, section, title, credits, instructorId, meeting days
