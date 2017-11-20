@@ -1,14 +1,25 @@
 package edu.ncsu.csc216.pack_scheduler.ui;
 
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 
+import edu.ncsu.csc216.pack_scheduler.catalog.CourseCatalog;
 import edu.ncsu.csc216.pack_scheduler.course.Course;
 import edu.ncsu.csc216.pack_scheduler.manager.RegistrationManager;
+import edu.ncsu.csc216.pack_scheduler.user.Faculty;
 import edu.ncsu.csc216.pack_scheduler.user.Student;
 import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
 
@@ -18,7 +29,7 @@ import edu.ncsu.csc216.pack_scheduler.user.schedule.FacultySchedule;
  * @author Ben Gale
  * @author Brian Wu
  */
-public class FacultySchedulePanel {
+public class FacultySchedulePanel extends JPanel implements ActionListener {
 
     /** ID number used for object serialization. */
     private static final long serialVersionUID = 1L;
@@ -36,31 +47,104 @@ public class FacultySchedulePanel {
     private JScrollPane scrollSchedule;
     private JScrollPane scrollRoll;
     private JPanel pnlCourseDetails;
-    private JLabel lblNameTitle;
-    private JLabel lblSectionTitle;
-    private JLabel lblTitleTitle;
-    private JLabel lblInstructorTitle;
-    private JLabel lblCreditsTitle;
-    private JLabel lblMeetingTitle;
-    private JLabel lblEnrollmentCapTitle;
-    private JLabel lblOpenSeatsTitle;
-    private JLabel lblWaitlistTitle;
-    private JLabel lblName;
-    private JLabel lblSection;
-    private JLabel lblTitle;
-    private JLabel lblInstructor;
-    private JLabel lblCredits;
-    private JLabel lblMeeting;
-    private JLabel lblEnrollmentCap;
-    private JLabel lblOpenSeats;
-    private JLabel lblWaitlist;
+    /** Label for Course Details name title */
+    private JLabel lblNameTitle = new JLabel("Name: ");
+    /** Label for Course Details section title */
+    private JLabel lblSectionTitle = new JLabel("Section: ");
+    /** Label for Course Details title title */
+    private JLabel lblTitleTitle = new JLabel("Title: ");
+    /** Label for Course Details instructor title */
+    private JLabel lblInstructorTitle = new JLabel("Instructor: ");
+    /** Label for Course Details credit hours title */
+    private JLabel lblCreditsTitle = new JLabel("Credits: ");
+    /** Label for Course Details meeting title */
+    private JLabel lblMeetingTitle = new JLabel("Meeting: ");
+    /** Label for Course Details enrollment cap title */
+    private JLabel lblEnrollmentCapTitle = new JLabel("Enrollment Cap: ");
+    /** Label for Course Details open seats title */
+    private JLabel lblOpenSeatsTitle = new JLabel("Open Seats: ");
+    /** Label for Course Details waitlist title */
+    private JLabel lblWaitlistTitle = new JLabel("Number on Waitlist: ");
+    /** Label for Course Details name */
+    private JLabel lblName = new JLabel("");
+    /** Label for Course Details section */
+    private JLabel lblSection = new JLabel("");
+    /** Label for Course Details title */
+    private JLabel lblTitle = new JLabel("");
+    /** Label for Course Details instructor */
+    private JLabel lblInstructor = new JLabel("");
+    /** Label for Course Details credit hours */
+    private JLabel lblCredits = new JLabel("");
+    /** Label for Course Details meeting */
+    private JLabel lblMeeting = new JLabel("");
+    /** Label for Course Details enrollment cap */
+    private JLabel lblEnrollmentCap = new JLabel("");
+    /** Label for Course Details open seats */
+    private JLabel lblOpenSeats = new JLabel("");
+    /** Label for waitlist seats */
+    private JLabel lblWaitlist = new JLabel("");
+    private Faculty currentUser;
     private FacultySchedule schedule;
-    
+    private RegistrationManager manager;
+    private CourseCatalog catalog;
     
     /**
      * 
      */
     public FacultySchedulePanel() {
+        //Set up the layout
+        super(new GridBagLayout());
+        
+        //Get the registration manager instance
+        manager = RegistrationManager.getInstance();
+        //Get the current user
+        currentUser = (Faculty) manager.getCurrentUser();
+        //Get the user's schedule
+        schedule = currentUser.getSchedule();
+        
+        //Set up the schedule table
+        scheduleTableModel = new CourseTableModel(false);
+        tableSchedule = new JTable(scheduleTableModel) {
+            private static final long serialVersionUID = 1L;
+
+            /**
+             * Set custom tool tips for cells
+             * 
+             * @param e
+             *            MouseEvent that causes the tool tip
+             * @return tool tip text
+             */
+            @Override
+            public String getToolTipText(MouseEvent e) {
+                java.awt.Point p = e.getPoint();
+                int rowIndex = rowAtPoint(p);
+                int colIndex = columnAtPoint(p);
+                int realColumnIndex = convertColumnIndexToModel(colIndex);
+
+                return (String) scheduleTableModel.getValueAt(rowIndex, realColumnIndex);
+            }
+        };
+        tableSchedule.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableSchedule.setPreferredScrollableViewportSize(new Dimension(500, 500));
+        tableSchedule.setFillsViewportHeight(true);
+        tableSchedule.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                String name = tableSchedule.getValueAt(tableSchedule.getSelectedRow(), 0).toString();
+                String section = tableSchedule.getValueAt(tableSchedule.getSelectedRow(), 1).toString();
+                Course c = manager.getCourseCatalog().getCourseFromCatalog(name, section);
+                updateCourseDetails(c);
+            }
+
+        });
+    }
+    
+    /**
+     * 
+     * @param e
+     */
+    public void actionPerformed(ActionEvent e) {
         
     }
     
@@ -97,7 +181,17 @@ public class FacultySchedulePanel {
      * @param c
      */
     private void updateCourseDetails(Course c) {
-        
+        if (c != null) {
+            lblName.setText(c.getName());
+            lblSection.setText(c.getSection());
+            lblTitle.setText(c.getTitle());
+            lblInstructor.setText(c.getInstructorId());
+            lblCredits.setText("" + c.getCredits());
+            lblMeeting.setText(c.getMeetingString());
+            lblEnrollmentCap.setText("" + c.getCourseRoll().getEnrollmentCap());
+            lblOpenSeats.setText("" + c.getCourseRoll().getOpenSeats());
+            lblWaitlist.setText("" + c.getCourseRoll().getNumberOnWaitlist());
+        }
     }
     
     /**
@@ -199,21 +293,17 @@ public class FacultySchedulePanel {
          * {@link WolfScheduler}.
          */
         private void updateData() {
-//            if (isCatalog) {
-//                data = catalog.getCourseCatalog();
-//            } else {
-//                currentUser = (Student) RegistrationManager.getInstance().getCurrentUser();
-//                if (currentUser != null) {
-//                    schedule = currentUser.getSchedule();
-//                    txtScheduleTitle.setText(schedule.getTitle());
-//                    borderSchedule.setTitle(schedule.getTitle());
-//                    scrollSchedule.setToolTipText(schedule.getTitle());
-//                    data = schedule.getScheduledCourses();
-//
-//                    StudentRegistrationPanel.this.repaint();
-//                    StudentRegistrationPanel.this.validate();
-//                }
-//            }
+            if (isCatalog) {
+                data = catalog.getCourseCatalog();
+            } else {
+                currentUser = (Faculty) RegistrationManager.getInstance().getCurrentUser();
+                if (currentUser != null) {
+                    schedule = currentUser.getSchedule();
+                    data = schedule.getScheduledCourses();
+                    FacultySchedulePanel.this.repaint();
+                    FacultySchedulePanel.this.validate();
+                }
+            }
         }
         
     }
